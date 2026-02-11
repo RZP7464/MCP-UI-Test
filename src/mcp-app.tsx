@@ -1,5 +1,5 @@
 /**
- * @file App that demonstrates a few features using MCP Apps SDK + Preact.
+ * @file E-commerce Product Catalog - Tira Beauty Store Demo
  */
 import {
   App,
@@ -8,24 +8,68 @@ import {
   applyHostStyleVariables,
   type McpUiHostContext,
 } from "@modelcontextprotocol/ext-apps";
-import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { useCallback, useEffect, useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { render } from "preact";
-import styles from "./mcp-app.module.css";
 
-function extractTime(callToolResult: CallToolResult): string {
-  const { text } = callToolResult.content?.find((c) => c.type === "text")!;
-  return text;
-}
+// Hardcoded products from Tira catalog
+const PRODUCTS = [
+  {
+    id: 1,
+    title: "Essence Long Lasting Lipstick - 02 Just Perfect",
+    vendor: "Essence",
+    price: 340,
+    comparePrice: 398,
+    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/essence/1034836/0/cuqsTzJrnf-VCZaeBSdNW-1034836_1.jpg",
+    description: "Premium quality lipstick product for everyday use. Perfect for all skin types.",
+    category: "Lipstick"
+  },
+  {
+    id: 2,
+    title: "Lakme 9 To 5 Matte To Glass Liquid Lip Color - Passion Pink",
+    vendor: "Lakme",
+    price: 650,
+    comparePrice: 748,
+    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/lakme/1120648/0/DICqDA3GWt-lPhtFtqmi-1120648_1.jpg",
+    description: "Matte to glass finish liquid lip color. Long-lasting formula for all-day wear.",
+    category: "Lipstick"
+  },
+  {
+    id: 3,
+    title: "Typsy Beauty Drink & Blink Curling Mascara - Black",
+    vendor: "Typsy Beauty",
+    price: 899,
+    comparePrice: 1090,
+    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/typsy-beauty/1110418/0/MAGiDMxEio-2UcUVZVC2A-1110418-1.jpg",
+    description: "Professional curling mascara for dramatic lashes. Smudge-proof formula.",
+    category: "Mascara"
+  },
+  {
+    id: 4,
+    title: "Minimalist SPF 60 PA++++ Sunscreen With Antioxidant Silymarin",
+    vendor: "Minimalist",
+    price: 500,
+    comparePrice: 622,
+    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/minimalist/1002796/0/l9hHlPvPp--d_xlBotlGj-1002796_1.jpg",
+    description: "High protection sunscreen with antioxidants. Perfect for daily sun protection.",
+    category: "Sunscreen"
+  },
+  {
+    id: 5,
+    title: "Essence The Brown Edition Eyeshadow Palette - 30",
+    vendor: "Essence",
+    price: 580,
+    comparePrice: 711,
+    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/essence/1049107/0/BVmrW9fjvI-07uEgsrgt1-1049107_1.jpg",
+    description: "30 stunning brown shades eyeshadow palette. Create endless eye looks.",
+    category: "Eye Shadow"
+  }
+];
 
-
-function GetTimeApp() {
+function ProductStore() {
   const [app, setApp] = useState<App | null>(null);
   const [error, setError] = useState<Error | null>(null);
-  const [toolResult, setToolResult] = useState<CallToolResult | null>(null);
   const [hostContext, setHostContext] = useState<McpUiHostContext | undefined>();
 
-  // Apply host styles reactively when hostContext changes
   useEffect(() => {
     if (hostContext?.theme) {
       applyDocumentTheme(hostContext.theme);
@@ -39,23 +83,8 @@ function GetTimeApp() {
   }, [hostContext]);
 
   useEffect(() => {
-    const instance = new App({ name: "Get Time App", version: "1.0.0" });
-
-    instance.ontoolinput = async (input) => {
-      console.info("Received tool call input:", input);
-    };
-
-    instance.ontoolresult = async (result) => {
-      console.info("Received tool call result:", result);
-      setToolResult(result);
-    };
-
-    instance.ontoolcancelled = (params) => {
-      console.info("Tool call cancelled:", params.reason);
-    };
-
+    const instance = new App({ name: "Tira Beauty Store", version: "1.0.0" });
     instance.onerror = console.error;
-
     instance.onhostcontextchanged = (params) => {
       setHostContext((prev) => ({ ...prev, ...params }));
     };
@@ -69,103 +98,233 @@ function GetTimeApp() {
       .catch(setError);
   }, []);
 
-  if (error) return <div><strong>ERROR:</strong> {error.message}</div>;
-  if (!app) return <div>Connecting...</div>;
+  if (error) return <div style={{ padding: "20px", color: "red" }}><strong>ERROR:</strong> {error.message}</div>;
+  if (!app) return <div style={{ padding: "20px" }}>Loading store...</div>;
 
-  return <GetTimeAppInner app={app} toolResult={toolResult} hostContext={hostContext} />;
+  return <ProductCatalog hostContext={hostContext} />;
 }
 
-
-interface GetTimeAppInnerProps {
-  app: App;
-  toolResult: CallToolResult | null;
+interface ProductCatalogProps {
   hostContext?: McpUiHostContext;
 }
-function GetTimeAppInner({ app, toolResult, hostContext }: GetTimeAppInnerProps) {
-  const [serverTime, setServerTime] = useState("Loading...");
-  const [messageText, setMessageText] = useState("This is message text.");
-  const [logText, setLogText] = useState("This is log text.");
-  const [linkUrl, setLinkUrl] = useState("https://modelcontextprotocol.io/");
 
-  useEffect(() => {
-    if (toolResult) {
-      setServerTime(extractTime(toolResult));
-    }
-  }, [toolResult]);
-
-  const handleGetTime = useCallback(async () => {
-    try {
-      console.info("Calling get-time tool...");
-      const result = await app.callServerTool({ name: "get-time", arguments: {} });
-      console.info("get-time result:", result);
-      setServerTime(extractTime(result));
-    } catch (e) {
-      console.error(e);
-      setServerTime("[ERROR]");
-    }
-  }, [app]);
-
-  const handleSendMessage = useCallback(async () => {
-    const signal = AbortSignal.timeout(5000);
-    try {
-      console.info("Sending message text to Host:", messageText);
-      const { isError } = await app.sendMessage(
-        { role: "user", content: [{ type: "text", text: messageText }] },
-        { signal },
-      );
-      console.info("Message", isError ? "rejected" : "accepted");
-    } catch (e) {
-      console.error("Message send error:", signal.aborted ? "timed out" : e);
-    }
-  }, [app, messageText]);
-
-  const handleSendLog = useCallback(async () => {
-    console.info("Sending log text to Host:", logText);
-    await app.sendLog({ level: "info", data: logText });
-  }, [app, logText]);
-
-  const handleOpenLink = useCallback(async () => {
-    console.info("Sending open link request to Host:", linkUrl);
-    const { isError } = await app.openLink({ url: linkUrl });
-    console.info("Open link request", isError ? "rejected" : "accepted");
-  }, [app, linkUrl]);
+function ProductCatalog({ hostContext }: ProductCatalogProps) {
+  const calculateDiscount = (price: number, comparePrice: number) => {
+    return Math.round(((comparePrice - price) / comparePrice) * 100);
+  };
 
   return (
-    <main
-      className={styles.main}
+    <div
       style={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
         paddingTop: hostContext?.safeAreaInsets?.top,
         paddingRight: hostContext?.safeAreaInsets?.right,
         paddingBottom: hostContext?.safeAreaInsets?.bottom,
         paddingLeft: hostContext?.safeAreaInsets?.left,
       }}
     >
-      <p className={styles.notice}>Watch activity in the DevTools console!</p>
+      {/* Header */}
+      <header style={{
+        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        color: "white",
+        padding: "30px 20px",
+        textAlign: "center",
+        boxShadow: "0 4px 6px rgba(0,0,0,0.1)"
+      }}>
+        <h1 style={{ margin: 0, fontSize: "32px", fontWeight: "bold" }}>Tira Beauty Store</h1>
+        <p style={{ margin: "10px 0 0 0", opacity: 0.9, fontSize: "16px" }}>Premium Beauty Products Collection</p>
+      </header>
 
-      <div className={styles.action}>
-        <p>
-          <strong>Server Time:</strong> <code className={styles.serverTime}>{serverTime}</code>
-        </p>
-        <button onClick={handleGetTime}>Get Server Time</button>
-      </div>
+      {/* Products Grid */}
+      <main style={{
+        maxWidth: "1200px",
+        margin: "0 auto",
+        padding: "40px 20px"
+      }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: "30px"
+        }}>
+          {PRODUCTS.map((product) => (
+            <div
+              key={product.id}
+              style={{
+                background: "white",
+                borderRadius: "16px",
+                overflow: "hidden",
+                boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                cursor: "pointer"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-8px)";
+                e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.15)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.1)";
+              }}
+            >
+              {/* Product Image */}
+              <div style={{
+                position: "relative",
+                paddingTop: "100%",
+                overflow: "hidden",
+                background: "#f8f9fa"
+              }}>
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover"
+                  }}
+                />
+                {/* Discount Badge */}
+                <div style={{
+                  position: "absolute",
+                  top: "15px",
+                  right: "15px",
+                  background: "#ef4444",
+                  color: "white",
+                  padding: "6px 12px",
+                  borderRadius: "20px",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  boxShadow: "0 2px 8px rgba(239, 68, 68, 0.3)"
+                }}>
+                  {calculateDiscount(product.price, product.comparePrice)}% OFF
+                </div>
+                {/* Category Badge */}
+                <div style={{
+                  position: "absolute",
+                  top: "15px",
+                  left: "15px",
+                  background: "rgba(255, 255, 255, 0.95)",
+                  color: "#667eea",
+                  padding: "6px 12px",
+                  borderRadius: "20px",
+                  fontSize: "12px",
+                  fontWeight: "600"
+                }}>
+                  {product.category}
+                </div>
+              </div>
 
-      <div className={styles.action}>
-        <textarea value={messageText} onChange={(e) => setMessageText(e.currentTarget.value)} />
-        <button onClick={handleSendMessage}>Send Message</button>
-      </div>
+              {/* Product Details */}
+              <div style={{ padding: "20px" }}>
+                {/* Vendor */}
+                <div style={{
+                  color: "#667eea",
+                  fontSize: "12px",
+                  fontWeight: "600",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.5px",
+                  marginBottom: "8px"
+                }}>
+                  {product.vendor}
+                </div>
 
-      <div className={styles.action}>
-        <input type="text" value={logText} onChange={(e) => setLogText(e.currentTarget.value)} />
-        <button onClick={handleSendLog}>Send Log</button>
-      </div>
+                {/* Title */}
+                <h3 style={{
+                  margin: "0 0 12px 0",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  color: "#1e293b",
+                  lineHeight: "1.4",
+                  height: "44px",
+                  overflow: "hidden",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical"
+                }}>
+                  {product.title}
+                </h3>
 
-      <div className={styles.action}>
-        <input type="url" value={linkUrl} onChange={(e) => setLinkUrl(e.currentTarget.value)} />
-        <button onClick={handleOpenLink}>Open Link</button>
-      </div>
-    </main>
+                {/* Description */}
+                <p style={{
+                  margin: "0 0 16px 0",
+                  fontSize: "14px",
+                  color: "#64748b",
+                  lineHeight: "1.5",
+                  height: "42px",
+                  overflow: "hidden"
+                }}>
+                  {product.description}
+                </p>
+
+                {/* Price Section */}
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  marginBottom: "16px"
+                }}>
+                  <span style={{
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                    color: "#1e293b"
+                  }}>
+                    ₹{product.price}
+                  </span>
+                  <span style={{
+                    fontSize: "16px",
+                    color: "#94a3b8",
+                    textDecoration: "line-through"
+                  }}>
+                    ₹{product.comparePrice}
+                  </span>
+                </div>
+
+                {/* Add to Cart Button */}
+                <button
+                  style={{
+                    width: "100%",
+                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    color: "white",
+                    border: "none",
+                    padding: "14px",
+                    borderRadius: "10px",
+                    fontSize: "15px",
+                    fontWeight: "600",
+                    cursor: "pointer",
+                    transition: "transform 0.2s ease, box-shadow 0.2s ease"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "scale(1.02)";
+                    e.currentTarget.style.boxShadow = "0 6px 20px rgba(102, 126, 234, 0.4)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                  onClick={() => console.log(`Added ${product.title} to cart`)}
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer style={{
+        textAlign: "center",
+        padding: "30px 20px",
+        color: "#64748b",
+        fontSize: "14px"
+      }}>
+        <p style={{ margin: 0 }}>Tira Beauty Store Demo - Powered by Claude MCP</p>
+      </footer>
+    </div>
   );
 }
 
-
-render(<GetTimeApp />, document.getElementById("root")!);
+render(<ProductStore />, document.getElementById("root")!);
