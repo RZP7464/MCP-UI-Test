@@ -117,7 +117,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+        background: "transparent",
         paddingTop: hostContext?.safeAreaInsets?.top,
         paddingRight: hostContext?.safeAreaInsets?.right,
         paddingBottom: hostContext?.safeAreaInsets?.bottom,
@@ -126,45 +126,42 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
     >
       {/* Header */}
       <header style={{
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        color: "white",
-        padding: "30px 20px",
-        textAlign: "center",
-        boxShadow: "0 4px 6px rgba(0,0,0,0.1)"
+        background: "transparent",
+        color: "#2c2c2c",
+        padding: "20px 16px",
+        borderBottom: "1px solid #e5e5e5"
       }}>
-        <h1 style={{ margin: 0, fontSize: "32px", fontWeight: "bold" }}>Tira Beauty Store</h1>
-        <p style={{ margin: "10px 0 0 0", opacity: 0.9, fontSize: "16px" }}>Premium Beauty Products Collection</p>
+        <h1 style={{ margin: 0, fontSize: "20px", fontWeight: "600" }}>Tira Beauty Store</h1>
+        <p style={{ margin: "4px 0 0 0", fontSize: "13px", color: "#666" }}>Premium Beauty Products Collection</p>
       </header>
 
       {/* Products Grid */}
       <main style={{
-        maxWidth: "1200px",
+        maxWidth: "900px",
         margin: "0 auto",
-        padding: "40px 20px"
+        padding: "20px 16px"
       }}>
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "30px"
+          gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+          gap: "16px"
         }}>
           {PRODUCTS.map((product) => (
             <div
               key={product.id}
               style={{
-                background: "white",
-                borderRadius: "16px",
+                background: "#fafafa",
+                borderRadius: "8px",
                 overflow: "hidden",
-                boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                border: "1px solid #e5e5e5",
+                transition: "border-color 0.2s ease",
                 cursor: "pointer"
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-8px)";
-                e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.15)";
+                e.currentTarget.style.borderColor = "#d4d4d4";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.1)";
+                e.currentTarget.style.borderColor = "#e5e5e5";
               }}
             >
               {/* Product Image */}
@@ -172,7 +169,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 position: "relative",
                 paddingTop: "100%",
                 overflow: "hidden",
-                background: "#f8f9fa"
+                background: "#ffffff"
               }}>
                 <img
                   src={product.image}
@@ -189,56 +186,55 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 {/* Discount Badge */}
                 <div style={{
                   position: "absolute",
-                  top: "15px",
-                  right: "15px",
-                  background: "#ef4444",
+                  top: "8px",
+                  right: "8px",
+                  background: "#dc2626",
                   color: "white",
-                  padding: "6px 12px",
-                  borderRadius: "20px",
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  boxShadow: "0 2px 8px rgba(239, 68, 68, 0.3)"
+                  padding: "4px 8px",
+                  borderRadius: "4px",
+                  fontSize: "11px",
+                  fontWeight: "600"
                 }}>
                   {calculateDiscount(product.price, product.comparePrice)}% OFF
                 </div>
                 {/* Category Badge */}
                 <div style={{
                   position: "absolute",
-                  top: "15px",
-                  left: "15px",
-                  background: "rgba(255, 255, 255, 0.95)",
-                  color: "#667eea",
-                  padding: "6px 12px",
-                  borderRadius: "20px",
-                  fontSize: "12px",
-                  fontWeight: "600"
+                  top: "8px",
+                  left: "8px",
+                  background: "rgba(255, 255, 255, 0.9)",
+                  color: "#525252",
+                  padding: "4px 8px",
+                  borderRadius: "4px",
+                  fontSize: "10px",
+                  fontWeight: "500"
                 }}>
                   {product.category}
                 </div>
               </div>
 
               {/* Product Details */}
-              <div style={{ padding: "20px" }}>
+              <div style={{ padding: "12px" }}>
                 {/* Vendor */}
                 <div style={{
-                  color: "#667eea",
-                  fontSize: "12px",
-                  fontWeight: "600",
+                  color: "#737373",
+                  fontSize: "10px",
+                  fontWeight: "500",
                   textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                  marginBottom: "8px"
+                  letterSpacing: "0.3px",
+                  marginBottom: "4px"
                 }}>
                   {product.vendor}
                 </div>
 
                 {/* Title */}
                 <h3 style={{
-                  margin: "0 0 12px 0",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  color: "#1e293b",
-                  lineHeight: "1.4",
-                  height: "44px",
+                  margin: "0 0 8px 0",
+                  fontSize: "13px",
+                  fontWeight: "500",
+                  color: "#262626",
+                  lineHeight: "1.3",
+                  height: "34px",
                   overflow: "hidden",
                   display: "-webkit-box",
                   WebkitLineClamp: 2,
@@ -247,35 +243,23 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                   {product.title}
                 </h3>
 
-                {/* Description */}
-                <p style={{
-                  margin: "0 0 16px 0",
-                  fontSize: "14px",
-                  color: "#64748b",
-                  lineHeight: "1.5",
-                  height: "42px",
-                  overflow: "hidden"
-                }}>
-                  {product.description}
-                </p>
-
                 {/* Price Section */}
                 <div style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "10px",
-                  marginBottom: "16px"
+                  gap: "6px",
+                  marginBottom: "10px"
                 }}>
                   <span style={{
-                    fontSize: "24px",
-                    fontWeight: "bold",
-                    color: "#1e293b"
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    color: "#171717"
                   }}>
                     ₹{product.price}
                   </span>
                   <span style={{
-                    fontSize: "16px",
-                    color: "#94a3b8",
+                    fontSize: "12px",
+                    color: "#a3a3a3",
                     textDecoration: "line-through"
                   }}>
                     ₹{product.comparePrice}
@@ -286,23 +270,21 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 <button
                   style={{
                     width: "100%",
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    background: "#262626",
                     color: "white",
                     border: "none",
-                    padding: "14px",
-                    borderRadius: "10px",
-                    fontSize: "15px",
-                    fontWeight: "600",
+                    padding: "8px",
+                    borderRadius: "6px",
+                    fontSize: "12px",
+                    fontWeight: "500",
                     cursor: "pointer",
-                    transition: "transform 0.2s ease, box-shadow 0.2s ease"
+                    transition: "background 0.2s ease"
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "scale(1.02)";
-                    e.currentTarget.style.boxShadow = "0 6px 20px rgba(102, 126, 234, 0.4)";
+                    e.currentTarget.style.background = "#171717";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "scale(1)";
-                    e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.style.background = "#262626";
                   }}
                   onClick={() => console.log(`Added ${product.title} to cart`)}
                 >
@@ -317,9 +299,11 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
       {/* Footer */}
       <footer style={{
         textAlign: "center",
-        padding: "30px 20px",
-        color: "#64748b",
-        fontSize: "14px"
+        padding: "20px 16px",
+        color: "#a3a3a3",
+        fontSize: "11px",
+        borderTop: "1px solid #e5e5e5",
+        marginTop: "20px"
       }}>
         <p style={{ margin: 0 }}>Tira Beauty Store Demo - Powered by Claude MCP</p>
       </footer>
