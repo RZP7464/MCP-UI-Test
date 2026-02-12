@@ -172,7 +172,6 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
           top: 0,
           bottom: 0,
           width: "40px",
-          background: "linear-gradient(to right, transparent, rgba(255,255,255,0.8))",
           pointerEvents: "none",
           zIndex: 1
         }}></div>
