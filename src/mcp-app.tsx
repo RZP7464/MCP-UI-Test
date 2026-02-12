@@ -118,17 +118,23 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
       <style>{`
         /* Custom scrollbar styling */
         main::-webkit-scrollbar {
-          height: 6px;
+          height: 8px;
         }
         main::-webkit-scrollbar-track {
-          background: transparent;
+          background: #f5f5f5;
+          border-radius: 4px;
+          margin: 0 16px;
         }
         main::-webkit-scrollbar-thumb {
           background: #d4d4d4;
-          border-radius: 3px;
+          border-radius: 4px;
         }
         main::-webkit-scrollbar-thumb:hover {
           background: #a3a3a3;
+        }
+        /* Smooth scrolling */
+        main {
+          scroll-behavior: smooth;
         }
       `}</style>
       <div
@@ -145,22 +151,38 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
       <header style={{
         background: "transparent",
         color: "#2c2c2c",
-        padding: "20px 16px",
+        padding: "20px 16px 16px",
         borderBottom: "1px solid #e5e5e5"
       }}>
         <h1 style={{ margin: 0, fontSize: "20px", fontWeight: "600" }}>Tira Beauty Store</h1>
-        <p style={{ margin: "4px 0 0 0", fontSize: "13px", color: "#666" }}>Premium Beauty Products Collection</p>
+        <p style={{ margin: "4px 0 0 0", fontSize: "13px", color: "#666" }}>Scroll to browse products →</p>
       </header>
 
-      {/* Products Grid */}
+      {/* Products Horizontal Scroll */}
       <main style={{
-        padding: "20px 16px",
-        overflowX: "auto"
+        position: "relative",
+        padding: "20px 0",
+        overflowX: "auto",
+        scrollSnapType: "x mandatory",
+        WebkitOverflowScrolling: "touch"
       }}>
+        {/* Scroll hint gradient */}
+        <div style={{
+          position: "absolute",
+          right: 0,
+          top: 0,
+          bottom: 0,
+          width: "40px",
+          background: "linear-gradient(to right, transparent, rgba(255,255,255,0.8))",
+          pointerEvents: "none",
+          zIndex: 1
+        }}></div>
         <div style={{
           display: "flex",
           gap: "16px",
-          paddingBottom: "8px"
+          paddingBottom: "8px",
+          paddingLeft: "16px",
+          paddingRight: "56px"
         }}>
           {PRODUCTS.map((product) => (
             <div
@@ -170,17 +192,21 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 borderRadius: "8px",
                 overflow: "hidden",
                 border: "1px solid #e5e5e5",
-                transition: "border-color 0.2s ease",
+                transition: "all 0.2s ease",
                 cursor: "pointer",
                 minWidth: "180px",
                 maxWidth: "180px",
-                flexShrink: 0
+                flexShrink: 0,
+                scrollSnapAlign: "start",
+                scrollSnapStop: "always"
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "#d4d4d4";
+                e.currentTarget.style.transform = "scale(1.02)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = "#e5e5e5";
+                e.currentTarget.style.transform = "scale(1)";
               }}
             >
               {/* Product Image */}
