@@ -215,13 +215,6 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
     return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   };
 
-  const getCardLogo = (network: string) => {
-    // Return emoji logos for card networks
-    if (network === "Visa") return "💳";
-    if (network === "MasterCard") return "💳";
-    return "💳";
-  };
-
   return (
     <>
       <style>{`
