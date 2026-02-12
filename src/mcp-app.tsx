@@ -326,9 +326,18 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
       const redirectAction = data.next?.find((action: any) => action.action === 'redirect');
       
       if (redirectAction && redirectAction.url) {
-        // Store auth URL and show it to user
+        // Store auth URL and copy to clipboard
         setAuthUrl(redirectAction.url);
-        showNotification('Please complete authentication in the link below', 'success');
+        
+        // Copy URL to clipboard
+        navigator.clipboard.writeText(redirectAction.url)
+          .then(() => {
+            showNotification('Authentication URL copied to clipboard!', 'success');
+          })
+          .catch((err) => {
+            console.error('Failed to copy:', err);
+            showNotification('Please complete authentication', 'success');
+          });
         
         // Start polling for payment status
         setIsPollingPayment(true);
@@ -606,67 +615,28 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             <p style={{ 
               fontSize: "14px", 
               color: "#737373", 
-              marginBottom: "24px",
+              marginBottom: "32px",
               lineHeight: "1.5"
             }}>
-              Please complete the authentication using the link below. We'll automatically detect when your payment is successful.
+              The authentication URL has been copied to your clipboard. Please open it in a new browser tab to complete the payment.
             </p>
 
-            {/* Authentication URL Display */}
-            <div style={{
-              background: "#fafafa",
-              border: "1px solid #e5e5e5",
-              borderRadius: "8px",
-              padding: "16px",
-              marginBottom: "24px"
-            }}>
-              <div style={{
-                fontSize: "12px",
-                color: "#737373",
-                marginBottom: "8px",
-                fontWeight: "500"
-              }}>
-                Authentication URL:
-              </div>
-              <div style={{
-                background: "white",
-                border: "1px solid #e5e5e5",
-                borderRadius: "6px",
-                padding: "12px",
-                fontSize: "11px",
-                fontFamily: "monospace",
-                color: "#262626",
-                wordBreak: "break-all",
-                lineHeight: "1.5",
-                userSelect: "all"
-              }}>
-                {authUrl}
-              </div>
-              <div style={{
-                fontSize: "11px",
-                color: "#737373",
-                marginTop: "8px",
-                fontStyle: "italic"
-              }}>
-                Click to select all, then copy and paste into a new browser tab
-              </div>
-            </div>
-
-            {/* Copy Instructions */}
+            {/* Instructions Box */}
             <div style={{
               background: "#fff7ed",
               border: "1px solid #fed7aa",
               borderRadius: "8px",
-              padding: "16px",
-              marginBottom: "24px"
+              padding: "20px",
+              marginBottom: "24px",
+              textAlign: "left"
             }}>
               <div style={{
                 fontSize: "14px",
                 fontWeight: "600",
                 color: "#9a3412",
-                marginBottom: "8px"
+                marginBottom: "12px"
               }}>
-                How to complete authentication:
+                📋 Next Steps:
               </div>
               <ol style={{
                 margin: 0,
@@ -675,13 +645,44 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 color: "#9a3412",
                 lineHeight: "1.8"
               }}>
-                <li>Click on the URL above to select it</li>
-                <li>Copy it (Ctrl+C or Cmd+C)</li>
                 <li>Open a new browser tab</li>
-                <li>Paste the URL and press Enter</li>
-                <li>Complete the OTP/3D Secure verification</li>
+                <li>Paste the URL (Ctrl+V or Cmd+V)</li>
+                <li>Press Enter</li>
+                <li>Complete the OTP or 3D Secure verification</li>
+                <li>Return here - we'll detect when payment succeeds</li>
               </ol>
             </div>
+
+            {/* Retry Copy Button */}
+            <button
+              style={{
+                background: "#e5e5e5",
+                color: "#262626",
+                border: "none",
+                padding: "10px 20px",
+                borderRadius: "6px",
+                fontSize: "13px",
+                fontWeight: "500",
+                cursor: "pointer",
+                transition: "background 0.2s ease",
+                marginBottom: "16px"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#d4d4d4";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#e5e5e5";
+              }}
+              onClick={() => {
+                if (authUrl) {
+                  navigator.clipboard.writeText(authUrl)
+                    .then(() => showNotification('URL copied again!', 'success'))
+                    .catch(() => showNotification('Failed to copy URL', 'error'));
+                }
+              }}
+            >
+              Copy URL Again
+            </button>
 
             <p style={{ 
               fontSize: "12px", 
@@ -693,10 +694,11 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
 
             <p style={{ 
               fontSize: "12px", 
-              color: "#a3a3a3", 
-              marginTop: "8px"
+              color: "#16a34a",
+              fontWeight: "500",
+              marginTop: "12px"
             }}>
-              This page will update automatically once payment is confirmed
+              ✓ This page will automatically update when payment is confirmed
             </p>
           </div>
         ) : (
