@@ -13,27 +13,27 @@ const DIST_DIR = import.meta.filename.endsWith(".ts")
  */
 export function createServer(): McpServer {
   const server = new McpServer({
-    name: "Basic MCP App Server (Preact)",
+    name: "Tira Beauty Store MCP Server",
     version: "1.0.0",
   });
 
   // Two-part registration: tool + resource, tied together by the resource URI.
-  const resourceUri = "ui://get-time/mcp-app.html";
+  const resourceUri = "ui://show-products/mcp-app.html";
 
   // Register a tool with UI metadata. When the host calls this tool, it reads
   // `_meta.ui.resourceUri` to know which resource to fetch and render as an
   // interactive UI.
   registerAppTool(server,
-    "get-time",
+    "show-products",
     {
-      title: "Get Time",
-      description: "Returns the current server time as an ISO 8601 string.",
+      title: "Show Products",
+      description: "Display an interactive beauty products catalog with shopping cart functionality.",
       inputSchema: {},
       _meta: { ui: { resourceUri } }, // Links this tool to its UI resource
     },
     async (): Promise<CallToolResult> => {
-      const time = new Date().toISOString();
-      return { content: [{ type: "text", text: time }] };
+      const totalProducts = 5;
+      return { content: [{ type: "text", text: `Showing ${totalProducts} beauty products from Tira catalog.` }] };
     },
   );
 
