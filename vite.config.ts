@@ -10,7 +10,14 @@ if (!INPUT) {
 const isDevelopment = process.env.NODE_ENV === "development";
 
 export default defineConfig({
-  plugins: [preact(), viteSingleFile()],
+  plugins: [preact({ devToolsEnabled: false }), viteSingleFile()],
+  resolve: {
+    alias: {
+      'react': 'preact/compat',
+      'react-dom': 'preact/compat',
+      'react/jsx-runtime': 'preact/jsx-runtime'
+    }
+  },
   build: {
     sourcemap: isDevelopment ? "inline" : undefined,
     cssMinify: !isDevelopment,

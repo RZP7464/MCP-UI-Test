@@ -1,5 +1,5 @@
 /**
- * @file E-commerce Product Catalog - Tira Beauty Store Demo
+ * @file E-commerce Product Catalog - Tira Beauty Store Demo with Blade Design Language
  */
 import {
   App,
@@ -10,6 +10,72 @@ import {
 } from "@modelcontextprotocol/ext-apps";
 import { useEffect, useState } from "preact/hooks";
 import { render } from "preact";
+
+// Blade Design Tokens (Razorpay's design system)
+const BLADE = {
+  colors: {
+    surface: {
+      background: {
+        primary: '#FFFFFF',
+        secondary: '#F7F8FA',
+        level2: '#EEF0F5',
+      }
+    },
+    interactive: {
+      primary: '#0D66FF', // Razorpay Blue
+      primaryHover: '#0A52CC',
+      primaryActive: '#084099',
+    },
+    text: {
+      primary: '#1F2937',
+      secondary: '#6B7280',
+      muted: '#9CA3AF',
+      onPrimary: '#FFFFFF',
+    },
+    feedback: {
+      positive: '#16A34A',
+      negative: '#DC2626',
+      warning: '#F59E0B',
+    },
+    border: {
+      subtle: '#E5E7EB',
+      muted: '#D1D5DB',
+      strong: '#9CA3AF',
+    }
+  },
+  spacing: {
+    2: '4px',
+    3: '8px',
+    4: '12px',
+    5: '16px',
+    6: '20px',
+    7: '24px',
+    8: '32px',
+  },
+  borderRadius: {
+    small: '4px',
+    medium: '8px',
+    large: '12px',
+    xlarge: '16px',
+  },
+  typography: {
+    fontSize: {
+      10: '10px',
+      12: '12px',
+      14: '14px',
+      16: '16px',
+      18: '18px',
+      20: '20px',
+      24: '24px',
+    },
+    fontWeight: {
+      regular: '400',
+      medium: '500',
+      semibold: '600',
+      bold: '700',
+    }
+  }
+};
 
 // Hardcoded products from Tira catalog
 const PRODUCTS = [
@@ -363,7 +429,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
           margin: 0 16px;
         }
         main::-webkit-scrollbar-thumb {
-          background: #d4d4d4;
+          background: BLADE.colors.border.muted;
           border-radius: 4px;
         }
         main::-webkit-scrollbar-thumb:hover {
@@ -404,7 +470,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
         background: "transparent",
         color: "#2c2c2c",
         padding: "20px 16px 16px",
-        borderBottom: "1px solid #e5e5e5"
+        borderBottom: "1px solid BLADE.colors.border.subtle"
       }}>
         <h1 style={{ margin: 0, fontSize: "20px", fontWeight: "600" }}>
           {paymentSuccess ? "Payment Confirmed" : showPayment ? "Payment Method" : showCheckout ? "Checkout" : "Tira Beauty Store"}
@@ -449,7 +515,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             <h2 style={{
               fontSize: "24px",
               fontWeight: "700",
-              color: "#262626",
+              color: "BLADE.colors.text.primary",
               textAlign: "center",
               marginBottom: "12px"
             }}>
@@ -467,8 +533,8 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
 
             {/* Payment Details */}
             <div style={{
-              background: "#fafafa",
-              border: "1px solid #e5e5e5",
+              background: "BLADE.colors.surface.background.secondary",
+              border: "1px solid BLADE.colors.border.subtle",
               borderRadius: "12px",
               padding: "20px",
               marginBottom: "24px"
@@ -476,7 +542,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               <h3 style={{
                 fontSize: "14px",
                 fontWeight: "600",
-                color: "#262626",
+                color: "BLADE.colors.text.primary",
                 marginBottom: "16px"
               }}>
                 Payment Details
@@ -490,11 +556,11 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                   </span>
                 </div>
 
-                <div style={{ height: "1px", background: "#e5e5e5" }}></div>
+                <div style={{ height: "1px", background: "BLADE.colors.border.subtle" }}></div>
 
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: "13px", color: "#737373" }}>Payment ID</span>
-                  <span style={{ fontSize: "12px", fontFamily: "monospace", color: "#262626" }}>
+                  <span style={{ fontSize: "12px", fontFamily: "monospace", color: "BLADE.colors.text.primary" }}>
                     {paymentSuccess.id}
                   </span>
                 </div>
@@ -513,14 +579,14 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
 
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: "13px", color: "#737373" }}>Payment Method</span>
-                  <span style={{ fontSize: "13px", color: "#262626" }}>
+                  <span style={{ fontSize: "13px", color: "BLADE.colors.text.primary" }}>
                     {paymentSuccess.card?.network} •••• {paymentSuccess.card?.last4}
                   </span>
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: "13px", color: "#737373" }}>Card Type</span>
-                  <span style={{ fontSize: "13px", color: "#262626", textTransform: "capitalize" }}>
+                  <span style={{ fontSize: "13px", color: "BLADE.colors.text.primary", textTransform: "capitalize" }}>
                     {paymentSuccess.card?.type}
                   </span>
                 </div>
@@ -528,7 +594,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 {paymentSuccess.acquirer_data?.auth_code && (
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={{ fontSize: "13px", color: "#737373" }}>Auth Code</span>
-                    <span style={{ fontSize: "12px", fontFamily: "monospace", color: "#262626" }}>
+                    <span style={{ fontSize: "12px", fontFamily: "monospace", color: "BLADE.colors.text.primary" }}>
                       {paymentSuccess.acquirer_data.auth_code}
                     </span>
                   </div>
@@ -536,7 +602,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
 
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: "13px", color: "#737373" }}>Date</span>
-                  <span style={{ fontSize: "13px", color: "#262626" }}>
+                  <span style={{ fontSize: "13px", color: "BLADE.colors.text.primary" }}>
                     {new Date(paymentSuccess.created_at * 1000).toLocaleString()}
                   </span>
                 </div>
@@ -547,7 +613,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             <button
               style={{
                 width: "100%",
-                background: "#262626",
+                background: BLADE.colors.interactive.primary,
                 color: "white",
                 border: "none",
                 padding: "14px",
@@ -558,10 +624,10 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 transition: "background 0.2s ease"
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#171717";
+                e.currentTarget.style.background = "BLADE.colors.interactive.primaryHover";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#262626";
+                e.currentTarget.style.background = "BLADE.colors.text.primary";
               }}
               onClick={() => {
                 // Reset everything and go back to products
@@ -588,7 +654,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               width: "60px",
               height: "60px",
               border: "4px solid #f5f5f5",
-              borderTop: "4px solid #262626",
+              borderTop: "4px solid BLADE.colors.text.primary",
               borderRadius: "50%",
               animation: "spin 1s linear infinite",
               margin: "0 auto 24px"
@@ -597,7 +663,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             <h2 style={{ 
               fontSize: "18px", 
               fontWeight: "600", 
-              color: "#262626", 
+              color: "BLADE.colors.text.primary", 
               marginBottom: "12px" 
             }}>
               Waiting for Payment Confirmation
@@ -622,8 +688,8 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 selection?.addRange(range);
               }}
               style={{
-                background: "#fafafa",
-                border: "2px solid #262626",
+                background: "BLADE.colors.surface.background.secondary",
+                border: "2px solid BLADE.colors.text.primary",
                 borderRadius: "8px",
                 padding: "16px",
                 marginBottom: "24px",
@@ -634,7 +700,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 e.currentTarget.style.background = "#f0f0f0";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#fafafa";
+                e.currentTarget.style.background = "BLADE.colors.surface.background.secondary";
               }}
             >
               <div style={{
@@ -648,7 +714,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               <div style={{
                 fontSize: "12px",
                 fontFamily: "monospace",
-                color: "#262626",
+                color: "BLADE.colors.text.primary",
                 wordBreak: "break-all",
                 lineHeight: "1.6",
                 userSelect: "all"
@@ -715,7 +781,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
           margin: "0 auto"
         }}>
           <div style={{ marginBottom: "20px" }}>
-            <h3 style={{ fontSize: "14px", fontWeight: "600", color: "#262626", marginBottom: "12px" }}>
+            <h3 style={{ fontSize: "14px", fontWeight: "600", color: "BLADE.colors.text.primary", marginBottom: "12px" }}>
               Saved Cards
             </h3>
             {SAVED_CARDS.items.map((cardData) => (
@@ -725,23 +791,23 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "16px",
-                  padding: "16px",
-                  background: selectedCard === cardData.id ? "#f0f0f0" : "#fafafa",
-                  border: selectedCard === cardData.id ? "2px solid #262626" : "1px solid #e5e5e5",
-                  borderRadius: "8px",
-                  marginBottom: "12px",
+                  gap: BLADE.spacing[5],
+                  padding: BLADE.spacing[5],
+                  background: selectedCard === cardData.id ? BLADE.colors.surface.background.level2 : BLADE.colors.surface.background.secondary,
+                  border: selectedCard === cardData.id ? `2px solid ${BLADE.colors.interactive.primary}` : `1px solid ${BLADE.colors.border.subtle}`,
+                  borderRadius: BLADE.borderRadius.medium,
+                  marginBottom: BLADE.spacing[4],
                   cursor: "pointer",
                   transition: "all 0.2s ease"
                 }}
                 onMouseEnter={(e) => {
                   if (selectedCard !== cardData.id) {
-                    e.currentTarget.style.borderColor = "#d4d4d4";
+                    e.currentTarget.style.borderColor = BLADE.colors.border.muted;
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (selectedCard !== cardData.id) {
-                    e.currentTarget.style.borderColor = "#e5e5e5";
+                    e.currentTarget.style.borderColor = BLADE.colors.border.subtle;
                   }
                 }}
               >
@@ -749,9 +815,9 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 <div style={{
                   width: "60px",
                   height: "40px",
-                  background: "white",
-                  borderRadius: "6px",
-                  border: "1px solid #e5e5e5",
+                  background: BLADE.colors.surface.background.primary,
+                  borderRadius: BLADE.borderRadius.small,
+                  border: `1px solid ${BLADE.colors.border.subtle}`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -802,7 +868,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                   <div style={{
                     fontSize: "14px",
                     fontWeight: "600",
-                    color: "#262626",
+                    color: "BLADE.colors.text.primary",
                     marginBottom: "4px"
                   }}>
                     {cardData.card.network} {cardData.card.type.charAt(0).toUpperCase() + cardData.card.type.slice(1)}
@@ -827,7 +893,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                   width: "20px",
                   height: "20px",
                   borderRadius: "50%",
-                  border: selectedCard === cardData.id ? "6px solid #262626" : "2px solid #d4d4d4",
+                  border: selectedCard === cardData.id ? "6px solid BLADE.colors.text.primary" : "2px solid BLADE.colors.border.muted",
                   flexShrink: 0
                 }}></div>
               </div>
@@ -837,9 +903,9 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
           {/* Payment Summary */}
           <div style={{
             padding: "16px",
-            background: "#fafafa",
+            background: "BLADE.colors.surface.background.secondary",
             borderRadius: "8px",
-            border: "1px solid #e5e5e5",
+            border: "1px solid BLADE.colors.border.subtle",
             marginBottom: "20px"
           }}>
             <div style={{
@@ -848,7 +914,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               marginBottom: "8px"
             }}>
               <span style={{ fontSize: "13px", color: "#737373" }}>Total Amount</span>
-              <span style={{ fontSize: "18px", fontWeight: "700", color: "#262626" }}>₹{getTotalPrice()}</span>
+              <span style={{ fontSize: "18px", fontWeight: "700", color: "BLADE.colors.text.primary" }}>₹{getTotalPrice()}</span>
             </div>
           </div>
 
@@ -857,8 +923,8 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             disabled={!selectedCard || isProcessingPayment}
             style={{
               width: "100%",
-              background: (selectedCard && !isProcessingPayment) ? "#262626" : "#e5e5e5",
-              color: (selectedCard && !isProcessingPayment) ? "white" : "#a3a3a3",
+              background: (selectedCard && !isProcessingPayment) ? BLADE.colors.interactive.primary : BLADE.colors.border.subtle,
+              color: (selectedCard && !isProcessingPayment) ? BLADE.colors.text.onPrimary : BLADE.colors.text.muted,
               border: "none",
               padding: "14px",
               borderRadius: "8px",
@@ -870,12 +936,12 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             }}
             onMouseEnter={(e) => {
               if (selectedCard && !isProcessingPayment) {
-                e.currentTarget.style.background = "#171717";
+                e.currentTarget.style.background = "BLADE.colors.interactive.primaryHover";
               }
             }}
             onMouseLeave={(e) => {
               if (selectedCard && !isProcessingPayment) {
-                e.currentTarget.style.background = "#262626";
+                e.currentTarget.style.background = "BLADE.colors.text.primary";
               }
             }}
             onClick={handlePayment}
@@ -916,10 +982,10 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             <div
               key={product.id}
               style={{
-                background: "#fafafa",
-                borderRadius: "8px",
+                background: BLADE.colors.surface.background.secondary,
+                borderRadius: BLADE.borderRadius.medium,
                 overflow: "hidden",
-                border: "1px solid #e5e5e5",
+                border: `1px solid ${BLADE.colors.border.subtle}`,
                 transition: "all 0.2s ease",
                 cursor: "pointer",
                 minWidth: "180px",
@@ -929,11 +995,11 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 scrollSnapStop: "always"
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#d4d4d4";
+                e.currentTarget.style.borderColor = BLADE.colors.border.muted;
                 e.currentTarget.style.transform = "scale(1.02)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "#e5e5e5";
+                e.currentTarget.style.borderColor = BLADE.colors.border.subtle;
                 e.currentTarget.style.transform = "scale(1)";
               }}
             >
@@ -942,7 +1008,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 position: "relative",
                 paddingTop: "100%",
                 overflow: "hidden",
-                background: "#ffffff"
+                background: BLADE.colors.surface.background.primary
               }}>
                 <img
                   src={product.image}
@@ -959,53 +1025,53 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 {/* Discount Badge */}
                 <div style={{
                   position: "absolute",
-                  top: "8px",
-                  right: "8px",
-                  background: "#dc2626",
-                  color: "white",
-                  padding: "4px 8px",
-                  borderRadius: "4px",
-                  fontSize: "11px",
-                  fontWeight: "600"
+                  top: BLADE.spacing[3],
+                  right: BLADE.spacing[3],
+                  background: BLADE.colors.feedback.negative,
+                  color: BLADE.colors.text.onPrimary,
+                  padding: `${BLADE.spacing[2]} ${BLADE.spacing[3]}`,
+                  borderRadius: BLADE.borderRadius.small,
+                  fontSize: BLADE.typography.fontSize[10],
+                  fontWeight: BLADE.typography.fontWeight.semibold
                 }}>
                   {calculateDiscount(product.price, product.comparePrice)}% OFF
                 </div>
                 {/* Category Badge */}
                 <div style={{
                   position: "absolute",
-                  top: "8px",
-                  left: "8px",
-                  background: "rgba(255, 255, 255, 0.9)",
-                  color: "#525252",
-                  padding: "4px 8px",
-                  borderRadius: "4px",
-                  fontSize: "10px",
-                  fontWeight: "500"
+                  top: BLADE.spacing[3],
+                  left: BLADE.spacing[3],
+                  background: "rgba(255, 255, 255, 0.95)",
+                  color: BLADE.colors.text.secondary,
+                  padding: `${BLADE.spacing[2]} ${BLADE.spacing[3]}`,
+                  borderRadius: BLADE.borderRadius.small,
+                  fontSize: BLADE.typography.fontSize[10],
+                  fontWeight: BLADE.typography.fontWeight.medium
                 }}>
                   {product.category}
                 </div>
               </div>
 
               {/* Product Details */}
-              <div style={{ padding: "12px" }}>
+              <div style={{ padding: BLADE.spacing[4] }}>
                 {/* Vendor */}
                 <div style={{
-                  color: "#737373",
-                  fontSize: "10px",
-                  fontWeight: "500",
+                  color: BLADE.colors.text.secondary,
+                  fontSize: BLADE.typography.fontSize[10],
+                  fontWeight: BLADE.typography.fontWeight.medium,
                   textTransform: "uppercase",
                   letterSpacing: "0.3px",
-                  marginBottom: "4px"
+                  marginBottom: BLADE.spacing[2]
                 }}>
                   {product.vendor}
                 </div>
 
                 {/* Title */}
                 <h3 style={{
-                  margin: "0 0 8px 0",
-                  fontSize: "13px",
-                  fontWeight: "500",
-                  color: "#262626",
+                  margin: `0 0 ${BLADE.spacing[3]} 0`,
+                  fontSize: BLADE.typography.fontSize[12],
+                  fontWeight: BLADE.typography.fontWeight.medium,
+                  color: BLADE.colors.text.primary,
                   lineHeight: "1.3",
                   height: "34px",
                   overflow: "hidden",
@@ -1026,7 +1092,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                   <span style={{
                     fontSize: "16px",
                     fontWeight: "600",
-                    color: "#171717"
+                    color: "BLADE.colors.interactive.primaryHover"
                   }}>
                     ₹{product.price}
                   </span>
@@ -1043,21 +1109,21 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 <button
                   style={{
                     width: "100%",
-                    background: "#262626",
-                    color: "white",
+                    background: BLADE.colors.interactive.primary,
+                    color: BLADE.colors.text.onPrimary,
                     border: "none",
-                    padding: "8px",
-                    borderRadius: "6px",
-                    fontSize: "12px",
-                    fontWeight: "500",
+                    padding: BLADE.spacing[3],
+                    borderRadius: BLADE.borderRadius.small,
+                    fontSize: BLADE.typography.fontSize[12],
+                    fontWeight: BLADE.typography.fontWeight.medium,
                     cursor: "pointer",
                     transition: "background 0.2s ease"
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "#171717";
+                    e.currentTarget.style.background = BLADE.colors.interactive.primaryHover;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "#262626";
+                    e.currentTarget.style.background = BLADE.colors.interactive.primary;
                   }}
                   onClick={() => addToCart(product)}
                 >
@@ -1081,10 +1147,10 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               display: "flex",
               gap: "12px",
               padding: "16px",
-              background: "#fafafa",
+              background: "BLADE.colors.surface.background.secondary",
               borderRadius: "8px",
               marginBottom: "12px",
-              border: "1px solid #e5e5e5"
+              border: "1px solid BLADE.colors.border.subtle"
             }}>
               <img
                 src={item.image}
@@ -1109,7 +1175,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 <div style={{
                   fontSize: "14px",
                   fontWeight: "500",
-                  color: "#262626",
+                  color: "BLADE.colors.text.primary",
                   marginBottom: "12px",
                   lineHeight: "1.3"
                 }}>
@@ -1125,7 +1191,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                     alignItems: "center",
                     gap: "10px",
                     background: "white",
-                    border: "1px solid #e5e5e5",
+                    border: "1px solid BLADE.colors.border.subtle",
                     borderRadius: "6px",
                     padding: "6px 8px"
                   }}>
@@ -1161,7 +1227,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                       +
                     </button>
                   </div>
-                  <div style={{ fontSize: "16px", fontWeight: "600", color: "#262626" }}>
+                  <div style={{ fontSize: "16px", fontWeight: "600", color: "BLADE.colors.text.primary" }}>
                     ₹{item.price * item.quantity}
                   </div>
                 </div>
@@ -1187,9 +1253,9 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
           {/* Total Section */}
           <div style={{
             padding: "20px",
-            background: "#fafafa",
+            background: "BLADE.colors.surface.background.secondary",
             borderRadius: "8px",
-            border: "1px solid #e5e5e5",
+            border: "1px solid BLADE.colors.border.subtle",
             marginTop: "20px"
           }}>
             <div style={{
@@ -1198,19 +1264,19 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               alignItems: "center",
               marginBottom: "16px",
               paddingBottom: "16px",
-              borderBottom: "1px solid #e5e5e5"
+              borderBottom: "1px solid BLADE.colors.border.subtle"
             }}>
               <div style={{ fontSize: "14px", color: "#737373" }}>
                 Subtotal ({getTotalItems()} items)
               </div>
-              <div style={{ fontSize: "18px", fontWeight: "600", color: "#262626" }}>
+              <div style={{ fontSize: "18px", fontWeight: "600", color: "BLADE.colors.text.primary" }}>
                 ₹{getTotalPrice()}
               </div>
             </div>
             <button
               style={{
                 width: "100%",
-                background: "#262626",
+                background: BLADE.colors.interactive.primary,
                 color: "white",
                 border: "none",
                 padding: "14px",
@@ -1221,10 +1287,10 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 transition: "background 0.2s ease"
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#171717";
+                e.currentTarget.style.background = "BLADE.colors.interactive.primaryHover";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#262626";
+                e.currentTarget.style.background = "BLADE.colors.text.primary";
               }}
               onClick={() => {
                 setShowPayment(true);
@@ -1240,7 +1306,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
       <footer style={{
         textAlign: "center",
         padding: "16px",
-        borderTop: "1px solid #e5e5e5",
+        borderTop: "1px solid BLADE.colors.border.subtle",
         marginTop: "20px",
         position: "sticky",
         bottom: 0,
@@ -1251,7 +1317,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
           <div style={{ marginBottom: "12px" }}>
             <button
               style={{
-                background: "#262626",
+                background: BLADE.colors.interactive.primary,
                 color: "white",
                 border: "none",
                 padding: "12px 24px",
@@ -1265,10 +1331,10 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 gap: "8px"
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#171717";
+                e.currentTarget.style.background = "BLADE.colors.interactive.primaryHover";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#262626";
+                e.currentTarget.style.background = "BLADE.colors.text.primary";
               }}
               onClick={() => setShowCheckout(!showCheckout)}
             >
@@ -1280,8 +1346,8 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
           <div style={{ marginBottom: "12px" }}>
             <button
               style={{
-                background: "#e5e5e5",
-                color: "#262626",
+                background: "BLADE.colors.border.subtle",
+                color: "BLADE.colors.text.primary",
                 border: "none",
                 padding: "12px 24px",
                 borderRadius: "8px",
@@ -1294,10 +1360,10 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 gap: "8px"
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#d4d4d4";
+                e.currentTarget.style.background = "BLADE.colors.border.muted";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#e5e5e5";
+                e.currentTarget.style.background = "BLADE.colors.border.subtle";
               }}
               onClick={() => setShowPayment(false)}
             >
