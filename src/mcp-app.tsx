@@ -925,10 +925,11 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               src="https://mcp-ui-test-production.up.railway.app/public/images/tira_logo.png" 
               alt="Tira" 
               style={{
-                height: "28px",
-                width: "auto"
+                height: "41px",
+                width: "auto",
+                borderRadius: "50%"
               }}
-            />
+            />Tira Beauty Store
           </div>
 
           {/* Right: Secured by Razorpay */}
