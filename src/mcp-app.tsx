@@ -89,7 +89,7 @@ const PRODUCTS = [
     size: "3.8g",
     rating: 4.5,
     reviews: 24,
-    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/essence/1034836/0/cuqsTzJrnf-VCZaeBSdNW-1034836_1.jpg",
+    image: "https://mcp-ui-test-production.up.railway.app/public/images/lipstick-1-essence-just-perfect.jpg",
     category: "Lipstick"
   },
   {
@@ -102,7 +102,7 @@ const PRODUCTS = [
     size: "3.8g",
     rating: 4.5,
     reviews: 24,
-    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/essence/1034838/0/2Qbs5OHNl8-NDXFo2aaAN-1034838_1.jpg",
+    image: "https://mcp-ui-test-production.up.railway.app/public/images/lipstick-2-essence-naive.jpg",
     category: "Lipstick"
   },
   {
@@ -115,7 +115,7 @@ const PRODUCTS = [
     size: "7.6g",
     rating: 4.5,
     reviews: 24,
-    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/lakme/1120648/0/DICqDA3GWt-lPhtFtqmi-1120648_1.jpg",
+    image: "https://mcp-ui-test-production.up.railway.app/public/images/lipstick-3-lakme-passion-pink.jpg",
     category: "Lipstick"
   },
   {
@@ -128,7 +128,7 @@ const PRODUCTS = [
     size: "7.6g",
     rating: 4.5,
     reviews: 24,
-    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/lakme/1120651/0/G5z3-ZF-0q-duIVbnrX2-1120651_1.jpg",
+    image: "https://mcp-ui-test-production.up.railway.app/public/images/lipstick-4-lakme-nut-roast.jpg",
     category: "Lipstick"
   },
   {
@@ -141,7 +141,7 @@ const PRODUCTS = [
     size: "7.6g",
     rating: 4.5,
     reviews: 24,
-    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/lakme/1120650/0/oRixwqfMKG-8f5YWMKZi-1120650_1.jpg",
+    image: "https://mcp-ui-test-production.up.railway.app/public/images/lipstick-5-lakme-beachy-vibe.jpg",
     category: "Lipstick"
   }
 ];
@@ -990,7 +990,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             gap: "8px"
           }}>
             <img 
-              src="/public/images/tira_logo.png" 
+              src="https://mcp-ui-test-production.up.railway.app/public/images/tira_logo.png" 
               alt="Tira" 
               style={{
                 height: "32px",
