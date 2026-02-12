@@ -11,7 +11,8 @@ import {
 import { useEffect, useState } from "preact/hooks";
 import { render } from "preact";
 import { TrashIcon, CloseIcon, ChevronUpIcon, StarIcon } from "@razorpay/blade/components";
-import { bladeTheme, BladeProvider } from "@razorpay/blade/components";
+import { BladeProvider } from "@razorpay/blade/components";
+import { paymentTheme } from "@razorpay/blade/tokens";
 
 // Blade Design Tokens (Razorpay's design system)
 const BLADE = {
@@ -237,7 +238,7 @@ function ProductStore() {
   if (!app) return <div style={{ padding: "20px" }}>Loading store...</div>;
 
   return (
-    <BladeProvider themeTokens={bladeTheme} colorScheme="light">
+    <BladeProvider themeTokens={paymentTheme} colorScheme="light">
       <ProductCatalog hostContext={hostContext} />
     </BladeProvider>
   );
