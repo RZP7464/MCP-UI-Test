@@ -74,6 +74,49 @@ interface CartItem {
   image: string;
 }
 
+// Saved cards data
+const SAVED_CARDS = {
+  "entity": "collection",
+  "count": 2,
+  "items": [
+    {
+      "id": "token_SF6A3zLrLs9LAU",
+      "entity": "token",
+      "token": "C76HN5TCtdJM0T",
+      "method": "card",
+      "card": {
+        "entity": "card",
+        "name": "",
+        "last4": "4492",
+        "network": "MasterCard",
+        "type": "debit",
+        "issuer": "UTIB",
+        "sub_type": "consumer",
+        "expiry_month": "01",
+        "expiry_year": "2099"
+      },
+      "status": "active"
+    },
+    {
+      "id": "token_SEQsF3U9ifAYka",
+      "entity": "token",
+      "token": "9GcAyR54qoVrzm",
+      "method": "card",
+      "card": {
+        "entity": "card",
+        "last4": "7022",
+        "network": "Visa",
+        "type": "credit",
+        "issuer": "YESB",
+        "sub_type": "consumer",
+        "expiry_month": "01",
+        "expiry_year": "2099"
+      },
+      "status": "active"
+    }
+  ]
+};
+
 function ProductStore() {
   const [app, setApp] = useState<App | null>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -120,6 +163,8 @@ interface ProductCatalogProps {
 function ProductCatalog({ hostContext }: ProductCatalogProps) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [selectedCard, setSelectedCard] = useState<string | null>(null);
 
   const calculateDiscount = (price: number, comparePrice: number) => {
     return Math.round(((comparePrice - price) / comparePrice) * 100);
@@ -170,6 +215,13 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
     return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   };
 
+  const getCardLogo = (network: string) => {
+    // Return emoji logos for card networks
+    if (network === "Visa") return "💳";
+    if (network === "MasterCard") return "💳";
+    return "💳";
+  };
+
   return (
     <>
       <style>{`
@@ -211,14 +263,198 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
         borderBottom: "1px solid #e5e5e5"
       }}>
         <h1 style={{ margin: 0, fontSize: "20px", fontWeight: "600" }}>
-          {showCheckout ? "Checkout" : "Tira Beauty Store"}
+          {showPayment ? "Payment Method" : showCheckout ? "Checkout" : "Tira Beauty Store"}
         </h1>
         <p style={{ margin: "4px 0 0 0", fontSize: "13px", color: "#666" }}>
-          {showCheckout ? `Review your ${getTotalItems()} items` : "Scroll to browse products →"}
+          {showPayment ? "Select a saved card to complete payment" : showCheckout ? `Review your ${getTotalItems()} items` : "Scroll to browse products →"}
         </p>
       </header>
 
-      {!showCheckout ? (
+      {showPayment ? (
+        // Payment Method Selection View
+        <div style={{
+          padding: "20px 16px",
+          maxWidth: "600px",
+          margin: "0 auto"
+        }}>
+          <div style={{ marginBottom: "20px" }}>
+            <h3 style={{ fontSize: "14px", fontWeight: "600", color: "#262626", marginBottom: "12px" }}>
+              Saved Cards
+            </h3>
+            {SAVED_CARDS.items.map((cardData) => (
+              <div
+                key={cardData.id}
+                onClick={() => setSelectedCard(cardData.id)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "16px",
+                  padding: "16px",
+                  background: selectedCard === cardData.id ? "#f0f0f0" : "#fafafa",
+                  border: selectedCard === cardData.id ? "2px solid #262626" : "1px solid #e5e5e5",
+                  borderRadius: "8px",
+                  marginBottom: "12px",
+                  cursor: "pointer",
+                  transition: "all 0.2s ease"
+                }}
+                onMouseEnter={(e) => {
+                  if (selectedCard !== cardData.id) {
+                    e.currentTarget.style.borderColor = "#d4d4d4";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (selectedCard !== cardData.id) {
+                    e.currentTarget.style.borderColor = "#e5e5e5";
+                  }
+                }}
+              >
+                {/* Card Network Logo */}
+                <div style={{
+                  width: "60px",
+                  height: "40px",
+                  background: "white",
+                  borderRadius: "6px",
+                  border: "1px solid #e5e5e5",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "24px",
+                  flexShrink: 0
+                }}>
+                  {cardData.card.network === "Visa" ? (
+                    <div style={{ 
+                      background: "linear-gradient(135deg, #1434CB 0%, #2E5BEC 100%)", 
+                      width: "100%", 
+                      height: "100%", 
+                      borderRadius: "6px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "white",
+                      fontWeight: "700",
+                      fontSize: "16px",
+                      fontStyle: "italic"
+                    }}>
+                      VISA
+                    </div>
+                  ) : (
+                    <div style={{ 
+                      display: "flex",
+                      gap: "2px"
+                    }}>
+                      <div style={{ 
+                        width: "20px", 
+                        height: "20px", 
+                        borderRadius: "50%", 
+                        background: "#EB001B",
+                        opacity: 0.9
+                      }}></div>
+                      <div style={{ 
+                        width: "20px", 
+                        height: "20px", 
+                        borderRadius: "50%", 
+                        background: "#FF5F00",
+                        marginLeft: "-8px"
+                      }}></div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Card Details */}
+                <div style={{ flex: 1 }}>
+                  <div style={{
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    color: "#262626",
+                    marginBottom: "4px"
+                  }}>
+                    {cardData.card.network} {cardData.card.type.charAt(0).toUpperCase() + cardData.card.type.slice(1)}
+                  </div>
+                  <div style={{
+                    fontSize: "12px",
+                    color: "#737373"
+                  }}>
+                    •••• {cardData.card.last4}
+                  </div>
+                  <div style={{
+                    fontSize: "11px",
+                    color: "#a3a3a3",
+                    marginTop: "2px"
+                  }}>
+                    Expires {cardData.card.expiry_month}/{cardData.card.expiry_year}
+                  </div>
+                </div>
+
+                {/* Selection Radio */}
+                <div style={{
+                  width: "20px",
+                  height: "20px",
+                  borderRadius: "50%",
+                  border: selectedCard === cardData.id ? "6px solid #262626" : "2px solid #d4d4d4",
+                  flexShrink: 0
+                }}></div>
+              </div>
+            ))}
+          </div>
+
+          {/* Payment Summary */}
+          <div style={{
+            padding: "16px",
+            background: "#fafafa",
+            borderRadius: "8px",
+            border: "1px solid #e5e5e5",
+            marginBottom: "20px"
+          }}>
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "8px"
+            }}>
+              <span style={{ fontSize: "13px", color: "#737373" }}>Total Amount</span>
+              <span style={{ fontSize: "18px", fontWeight: "700", color: "#262626" }}>₹{getTotalPrice()}</span>
+            </div>
+          </div>
+
+          {/* Pay Button */}
+          <button
+            disabled={!selectedCard}
+            style={{
+              width: "100%",
+              background: selectedCard ? "#262626" : "#e5e5e5",
+              color: selectedCard ? "white" : "#a3a3a3",
+              border: "none",
+              padding: "14px",
+              borderRadius: "8px",
+              fontSize: "15px",
+              fontWeight: "600",
+              cursor: selectedCard ? "pointer" : "not-allowed",
+              transition: "background 0.2s ease"
+            }}
+            onMouseEnter={(e) => {
+              if (selectedCard) {
+                e.currentTarget.style.background = "#171717";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (selectedCard) {
+                e.currentTarget.style.background = "#262626";
+              }
+            }}
+            onClick={() => {
+              if (selectedCard) {
+                const card = SAVED_CARDS.items.find(c => c.id === selectedCard);
+                alert(`Payment successful! Paid ₹${getTotalPrice()} using ${card?.card.network} •••• ${card?.card.last4}`);
+                setCart([]);
+                setShowPayment(false);
+                setShowCheckout(false);
+                setSelectedCard(null);
+              }
+            }}
+          >
+            Pay ₹{getTotalPrice()}
+          </button>
+        </div>
+      ) : !showCheckout ? (
         // Products View
         <>
       {/* Products Horizontal Scroll */}
@@ -561,9 +797,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 e.currentTarget.style.background = "#262626";
               }}
               onClick={() => {
-                alert(`Order placed for ₹${getTotalPrice()}! Thank you for shopping.`);
-                setCart([]);
-                setShowCheckout(false);
+                setShowPayment(true);
               }}
             >
               Place Order - ₹{getTotalPrice()}
@@ -583,7 +817,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
         background: "rgba(255, 255, 255, 0.95)",
         backdropFilter: "blur(10px)"
       }}>
-        {cart.length > 0 && (
+        {cart.length > 0 && !showPayment && (
           <div style={{ marginBottom: "12px" }}>
             <button
               style={{
@@ -609,6 +843,35 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               onClick={() => setShowCheckout(!showCheckout)}
             >
               {showCheckout ? "← Back to Products" : `View Cart (${getTotalItems()} items)`}
+            </button>
+          </div>
+        )}
+        {showPayment && (
+          <div style={{ marginBottom: "12px" }}>
+            <button
+              style={{
+                background: "#e5e5e5",
+                color: "#262626",
+                border: "none",
+                padding: "12px 24px",
+                borderRadius: "8px",
+                fontSize: "14px",
+                fontWeight: "600",
+                cursor: "pointer",
+                transition: "background 0.2s ease",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#d4d4d4";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#e5e5e5";
+              }}
+              onClick={() => setShowPayment(false)}
+            >
+              ← Back to Cart
             </button>
           </div>
         )}
