@@ -51,7 +51,7 @@ export async function startStreamableHTTPServer(
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Basic cnpwX2xpdmVfVW5UWENVRjhUZ0U3Vmg6VHJwRGtEYjdkcHhXMUl3V01hMkNQNE1J'
+          'Authorization': `Basic ${process.env.RZP_AUTH}`
         },
         body: JSON.stringify(paymentData)
       });
@@ -82,7 +82,7 @@ export async function startStreamableHTTPServer(
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Basic cnpwX2xpdmVfVW5UWENVRjhUZ0U3Vmg6VHJwRGtEYjdkcHhXMUl3V01hMkNQNE1J'
+          'Authorization': `Basic ${process.env.RZP_AUTH}`
         }
       });
 
