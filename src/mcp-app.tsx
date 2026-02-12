@@ -11,72 +11,6 @@ import {
 import { useEffect, useState } from "preact/hooks";
 import { render } from "preact";
 
-// Blade Design Tokens (Razorpay's design system)
-const BLADE = {
-  colors: {
-    surface: {
-      background: {
-        primary: '#FFFFFF',
-        secondary: '#F7F8FA',
-        level2: '#EEF0F5',
-      }
-    },
-    interactive: {
-      primary: '#0D66FF', // Razorpay Blue
-      primaryHover: '#0A52CC',
-      primaryActive: '#084099',
-    },
-    text: {
-      primary: '#1F2937',
-      secondary: '#6B7280',
-      muted: '#9CA3AF',
-      onPrimary: '#FFFFFF',
-    },
-    feedback: {
-      positive: '#16A34A',
-      negative: '#DC2626',
-      warning: '#F59E0B',
-    },
-    border: {
-      subtle: '#E5E7EB',
-      muted: '#D1D5DB',
-      strong: '#9CA3AF',
-    }
-  },
-  spacing: {
-    2: '4px',
-    3: '8px',
-    4: '12px',
-    5: '16px',
-    6: '20px',
-    7: '24px',
-    8: '32px',
-  },
-  borderRadius: {
-    small: '4px',
-    medium: '8px',
-    large: '12px',
-    xlarge: '16px',
-  },
-  typography: {
-    fontSize: {
-      10: '10px',
-      12: '12px',
-      14: '14px',
-      16: '16px',
-      18: '18px',
-      20: '20px',
-      24: '24px',
-    },
-    fontWeight: {
-      regular: '400',
-      medium: '500',
-      semibold: '600',
-      bold: '700',
-    }
-  }
-};
-
 // Hardcoded products - Tira Lipstick Collection
 const PRODUCTS = [
   {
@@ -545,9 +479,22 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               fontSize: "14px",
               color: "#737373",
               textAlign: "center",
-              marginBottom: "32px"
+              marginBottom: "32px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "6px"
             }}>
-              Your payment has been processed successfully
+              Powered by 
+              <img 
+                src="https://mcp-ui-test-production.up.railway.app/public/images/razorapyLogo.svg"
+                alt="Razorpay"
+                style={{
+                  height: "14px",
+                  width: "auto",
+                  marginLeft: "2px"
+                }}
+              />
             </p>
 
             {/* Payment Details */}
@@ -632,7 +579,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             <button
               style={{
                 width: "100%",
-                background: BLADE.colors.interactive.primary,
+                background: "#0D66FF",
                 color: "white",
                 border: "none",
                 padding: "14px",
@@ -640,13 +587,16 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 fontSize: "15px",
                 fontWeight: "600",
                 cursor: "pointer",
-                transition: "background 0.2s ease"
+                transition: "all 0.2s ease",
+                boxShadow: "0 4px 12px rgba(13, 102, 255, 0.3)"
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "BLADE.colors.interactive.primaryHover";
+                e.currentTarget.style.background = "#0A52CC";
+                e.currentTarget.style.boxShadow = "0 6px 16px rgba(13, 102, 255, 0.4)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "BLADE.colors.text.primary";
+                e.currentTarget.style.background = "#0D66FF";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(13, 102, 255, 0.3)";
               }}
               onClick={() => {
                 // Reset everything and redirect to products page
@@ -752,12 +702,12 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                   gap: "12px",
                   padding: "16px",
                   background: "white",
-                  border: selectedCard === cardData.id ? "2px solid #4F46E5" : "1px solid #E5E7EB",
+                  border: selectedCard === cardData.id ? "2px solid #0D66FF" : "1px solid #E5E7EB",
                   borderRadius: "12px",
                   marginTop: "12px",
                   cursor: "pointer",
                   transition: "all 0.2s ease",
-                  boxShadow: selectedCard === cardData.id ? "0 2px 8px rgba(79, 70, 229, 0.15)" : "0 1px 3px rgba(0, 0, 0, 0.05)"
+                  boxShadow: selectedCard === cardData.id ? "0 2px 8px rgba(13, 102, 255, 0.15)" : "0 1px 3px rgba(0, 0, 0, 0.05)"
                 }}
                 onMouseEnter={(e) => {
                   if (selectedCard !== cardData.id) {
@@ -854,7 +804,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                   width: "20px",
                   height: "20px",
                   borderRadius: "50%",
-                  border: selectedCard === cardData.id ? "6px solid #4F46E5" : "2px solid #D1D5DB",
+                  border: selectedCard === cardData.id ? "6px solid #0D66FF" : "2px solid #D1D5DB",
                   flexShrink: 0,
                   transition: "all 0.2s ease"
                 }}></div>
@@ -885,7 +835,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             disabled={!selectedCard || isProcessingPayment}
             style={{
               width: "100%",
-              background: (selectedCard && !isProcessingPayment) ? "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)" : "#E5E7EB",
+              background: (selectedCard && !isProcessingPayment) ? "#0D66FF" : "#E5E7EB",
               color: (selectedCard && !isProcessingPayment) ? "white" : "#9CA3AF",
               border: "none",
               padding: "14px",
@@ -899,18 +849,20 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
-              boxShadow: (selectedCard && !isProcessingPayment) ? "0 4px 12px rgba(79, 70, 229, 0.3)" : "none"
+              boxShadow: (selectedCard && !isProcessingPayment) ? "0 4px 12px rgba(13, 102, 255, 0.3)" : "none"
             }}
             onMouseEnter={(e) => {
               if (selectedCard && !isProcessingPayment) {
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow = "0 6px 16px rgba(79, 70, 229, 0.4)";
+                e.currentTarget.style.boxShadow = "0 6px 16px rgba(13, 102, 255, 0.4)";
+                e.currentTarget.style.background = "#0A52CC";
               }
             }}
             onMouseLeave={(e) => {
               if (selectedCard && !isProcessingPayment) {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 4px 12px rgba(79, 70, 229, 0.3)";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(13, 102, 255, 0.3)";
+                e.currentTarget.style.background = "#0D66FF";
               }
             }}
             onClick={handlePayment}
@@ -1222,8 +1174,8 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                         style={{
                           width: "100%",
                           background: "white",
-                          color: "#4F46E5",
-                          border: "1.5px solid #4F46E5",
+                          color: "#0D66FF",
+                          border: "1.5px solid #0D66FF",
                           padding: "9px",
                           borderRadius: "8px",
                           fontSize: "13px",
@@ -1232,12 +1184,12 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                           transition: "all 0.2s ease"
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.background = "#4F46E5";
+                          e.currentTarget.style.background = "#0D66FF";
                           e.currentTarget.style.color = "white";
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.background = "white";
-                          e.currentTarget.style.color = "#4F46E5";
+                          e.currentTarget.style.color = "#0D66FF";
                         }}
                       >
                         Add +
@@ -1314,7 +1266,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               onClick={() => setShowCheckout(true)}
               style={{
                 width: "100%",
-                background: "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)",
+                background: "#0D66FF",
                 color: "white",
                 border: "none",
                 padding: "13px",
@@ -1322,16 +1274,18 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 fontSize: "14px",
                 fontWeight: "600",
                 cursor: "pointer",
-                boxShadow: "0 4px 12px rgba(79, 70, 229, 0.3)",
+                boxShadow: "0 4px 12px rgba(13, 102, 255, 0.3)",
                 transition: "all 0.2s ease"
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow = "0 6px 16px rgba(79, 70, 229, 0.4)";
+                e.currentTarget.style.boxShadow = "0 6px 16px rgba(13, 102, 255, 0.4)";
+                e.currentTarget.style.background = "#0A52CC";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 4px 12px rgba(79, 70, 229, 0.3)";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(13, 102, 255, 0.3)";
+                e.currentTarget.style.background = "#0D66FF";
               }}
             >
               View Cart
@@ -1583,7 +1537,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             onClick={() => setShowPayment(true)}
             style={{
               width: "100%",
-              background: "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)",
+              background: "#0D66FF",
               color: "white",
               border: "none",
               padding: "14px",
@@ -1592,7 +1546,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               fontWeight: "600",
               cursor: "pointer",
               marginTop: "16px",
-              boxShadow: "0 4px 12px rgba(79, 70, 229, 0.3)",
+              boxShadow: "0 4px 12px rgba(13, 102, 255, 0.3)",
               transition: "all 0.2s ease",
               display: "flex",
               alignItems: "center",
@@ -1601,11 +1555,13 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 6px 16px rgba(79, 70, 229, 0.4)";
+              e.currentTarget.style.boxShadow = "0 6px 16px rgba(13, 102, 255, 0.4)";
+              e.currentTarget.style.background = "#0A52CC";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 4px 12px rgba(79, 70, 229, 0.3)";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(13, 102, 255, 0.3)";
+              e.currentTarget.style.background = "#0D66FF";
             }}
           >
             <img 
@@ -1632,41 +1588,12 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
         background: "rgba(255, 255, 255, 0.95)",
         backdropFilter: "blur(10px)"
       }}>
-        {cart.length > 0 && !showPayment && (
-          <div style={{ marginBottom: "12px" }}>
-            <button
-              style={{
-                background: BLADE.colors.interactive.primary,
-                color: "white",
-                border: "none",
-                padding: "12px 24px",
-                borderRadius: "8px",
-                fontSize: "14px",
-                fontWeight: "600",
-                cursor: "pointer",
-                transition: "background 0.2s ease",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "BLADE.colors.interactive.primaryHover";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "BLADE.colors.text.primary";
-              }}
-              onClick={() => setShowCheckout(!showCheckout)}
-            >
-              {showCheckout ? "← Back to Products" : `View Cart (${getTotalItems()} items)`}
-            </button>
-          </div>
-        )}
         {showPayment && (
           <div style={{ marginBottom: "12px" }}>
             <button
               style={{
-                background: "BLADE.colors.border.subtle",
-                color: "BLADE.colors.text.primary",
+                background: "#F3F4F6",
+                color: "#374151",
                 border: "none",
                 padding: "12px 24px",
                 borderRadius: "8px",
@@ -1679,10 +1606,10 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 gap: "8px"
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "BLADE.colors.border.muted";
+                e.currentTarget.style.background = "#E5E7EB";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "BLADE.colors.border.subtle";
+                e.currentTarget.style.background = "#F3F4F6";
               }}
               onClick={() => setShowPayment(false)}
             >
