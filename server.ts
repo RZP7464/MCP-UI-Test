@@ -54,7 +54,8 @@ export function createServer(): McpServer {
             _meta: {
               ui: {
                 csp: {
-                  resourceDomains: ["https://mcp-ui-test-production.up.railway.app"]
+                  resourceDomains: ["https://mcp-ui-test-production.up.railway.app"],
+                  connectDomains: ["https://api-dark.razorpay.com"]
                 }
               }
             }

@@ -165,6 +165,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
   const [showCheckout, setShowCheckout] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const calculateDiscount = (price: number, comparePrice: number) => {
     return Math.round(((comparePrice - price) / comparePrice) * 100);
@@ -213,6 +214,68 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
 
   const getTotalPrice = () => {
     return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  };
+
+  const handlePayment = async () => {
+    if (!selectedCard) return;
+
+    setIsProcessingPayment(true);
+    
+    try {
+      const card = SAVED_CARDS.items.find(c => c.id === selectedCard);
+      if (!card) {
+        throw new Error('Card not found');
+      }
+
+      // Prepare payment request
+      const paymentData = {
+        amount: getTotalPrice() * 100, // Convert to paise (₹1 = 100 paise)
+        currency: "INR",
+        customer_id: "cust_SEQr1OUUlPaRwJ",
+        token: card.token,
+        contact: "9325938054",
+        email: "himanshu.shekhar@razorpay.com",
+        notes: {
+          "order_items": getTotalItems(),
+          "order_total": getTotalPrice()
+        }
+      };
+
+      // Call Razorpay API
+      const response = await fetch('https://api-dark.razorpay.com/v1/payments/create/json', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Payment API failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      // Find redirect action in next array
+      const redirectAction = data.next?.find((action: any) => action.action === 'redirect');
+      
+      if (redirectAction && redirectAction.url) {
+        // Redirect to authentication URL
+        window.location.href = redirectAction.url;
+      } else {
+        // Payment successful without redirect
+        alert(`Payment successful! Payment ID: ${data.razorpay_payment_id}`);
+        setCart([]);
+        setShowPayment(false);
+        setShowCheckout(false);
+        setSelectedCard(null);
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert(`Payment failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setIsProcessingPayment(false);
+    }
   };
 
   return (
@@ -410,41 +473,33 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
 
           {/* Pay Button */}
           <button
-            disabled={!selectedCard}
+            disabled={!selectedCard || isProcessingPayment}
             style={{
               width: "100%",
-              background: selectedCard ? "#262626" : "#e5e5e5",
-              color: selectedCard ? "white" : "#a3a3a3",
+              background: (selectedCard && !isProcessingPayment) ? "#262626" : "#e5e5e5",
+              color: (selectedCard && !isProcessingPayment) ? "white" : "#a3a3a3",
               border: "none",
               padding: "14px",
               borderRadius: "8px",
               fontSize: "15px",
               fontWeight: "600",
-              cursor: selectedCard ? "pointer" : "not-allowed",
-              transition: "background 0.2s ease"
+              cursor: (selectedCard && !isProcessingPayment) ? "pointer" : "not-allowed",
+              transition: "background 0.2s ease",
+              position: "relative"
             }}
             onMouseEnter={(e) => {
-              if (selectedCard) {
+              if (selectedCard && !isProcessingPayment) {
                 e.currentTarget.style.background = "#171717";
               }
             }}
             onMouseLeave={(e) => {
-              if (selectedCard) {
+              if (selectedCard && !isProcessingPayment) {
                 e.currentTarget.style.background = "#262626";
               }
             }}
-            onClick={() => {
-              if (selectedCard) {
-                const card = SAVED_CARDS.items.find(c => c.id === selectedCard);
-                alert(`Payment successful! Paid ₹${getTotalPrice()} using ${card?.card.network} •••• ${card?.card.last4}`);
-                setCart([]);
-                setShowPayment(false);
-                setShowCheckout(false);
-                setSelectedCard(null);
-              }
-            }}
+            onClick={handlePayment}
           >
-            Pay ₹{getTotalPrice()}
+            {isProcessingPayment ? "Processing..." : `Pay ₹${getTotalPrice()}`}
           </button>
         </div>
       ) : !showCheckout ? (
