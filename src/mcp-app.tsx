@@ -77,57 +77,59 @@ const BLADE = {
   }
 };
 
-// Hardcoded products from Tira catalog
+// Hardcoded products - Body Wash Collection
 const PRODUCTS = [
   {
     id: 1,
-    title: "Essence Long Lasting Lipstick - 02 Just Perfect",
-    vendor: "Essence",
-    price: 1,
-    comparePrice: 398,
-    image: "https://mcp-ui-test-production.up.railway.app/public/images/product-1-essence-lipstick.jpg",
-    description: "Premium quality lipstick product for everyday use. Perfect for all skin types.",
-    category: "Lipstick"
+    title: "Exfoliating Body Wash",
+    subtitle: "Fades tan and remove dead skin",
+    vendor: "ChemistAtPlay",
+    price: 1149,
+    comparePrice: 1149,
+    size: "100 ml",
+    rating: 4.5,
+    reviews: 24,
+    gradient: "linear-gradient(135deg, #C8E4F5 0%, #A8C5E3 100%)",
+    category: "Body Care"
   },
   {
     id: 2,
-    title: "Lakme 9 To 5 Matte To Glass Liquid Lip Color - Passion Pink",
-    vendor: "Lakme",
-    price: 1,
-    comparePrice: 748,
-    image: "https://mcp-ui-test-production.up.railway.app/public/images/product-2-lakme-lipcolor.jpg",
-    description: "Matte to glass finish liquid lip color. Long-lasting formula for all-day wear.",
-    category: "Lipstick"
+    title: "Exfoliating Body Wash",
+    subtitle: "Fades tan and remove dead skin",
+    vendor: "ChemistAtPlay",
+    price: 1149,
+    comparePrice: 1149,
+    size: "100 ml",
+    rating: 4.5,
+    reviews: 24,
+    gradient: "linear-gradient(135deg, #E8E0A8 0%, #D4C894 100%)",
+    category: "Body Care"
   },
   {
     id: 3,
-    title: "Typsy Beauty Drink & Blink Curling Mascara - Black",
-    vendor: "Typsy Beauty",
-    price: 1,
-    comparePrice: 1090,
-    image: "https://mcp-ui-test-production.up.railway.app/public/images/product-3-typsy-mascara.jpg",
-    description: "Professional curling mascara for dramatic lashes. Smudge-proof formula.",
-    category: "Mascara"
+    title: "Exfoliating Body Wash",
+    subtitle: "Fades tan and remove dead skin",
+    vendor: "ChemistAtPlay",
+    price: 1149,
+    comparePrice: 1149,
+    size: "100 ml",
+    rating: 4.5,
+    reviews: 24,
+    gradient: "linear-gradient(135deg, #F4D4C4 0%, #E8BCA8 100%)",
+    category: "Body Care"
   },
   {
     id: 4,
-    title: "Minimalist SPF 60 PA++++ Sunscreen With Antioxidant Silymarin",
-    vendor: "Minimalist",
-    price: 1,
-    comparePrice: 622,
-    image: "https://mcp-ui-test-production.up.railway.app/public/images/product-4-minimalist-sunscreen.jpg",
-    description: "High protection sunscreen with antioxidants. Perfect for daily sun protection.",
-    category: "Sunscreen"
-  },
-  {
-    id: 5,
-    title: "Essence The Brown Edition Eyeshadow Palette - 30",
-    vendor: "Essence",
-    price: 1,
-    comparePrice: 711,
-    image: "https://mcp-ui-test-production.up.railway.app/public/images/product-5-essence-eyeshadow.jpg",
-    description: "30 stunning brown shades eyeshadow palette. Create endless eye looks.",
-    category: "Eye Shadow"
+    title: "Exfoliating Body Wash",
+    subtitle: "Fades tan and remove dead skin",
+    vendor: "ChemistAtPlay",
+    price: 1149,
+    comparePrice: 1149,
+    size: "100 ml",
+    rating: 4.5,
+    reviews: 24,
+    gradient: "linear-gradient(135deg, #F4C4C8 0%, #E8A8B0 100%)",
+    category: "Body Care"
   }
 ];
 
@@ -137,7 +139,7 @@ interface CartItem {
   vendor: string;
   price: number;
   quantity: number;
-  image: string;
+  gradient: string;
 }
 
 // Saved cards data
@@ -201,7 +203,7 @@ function ProductStore() {
   }, [hostContext]);
 
   useEffect(() => {
-    const instance = new App({ name: "Tira Beauty Store", version: "1.0.0" });
+    const instance = new App({ name: "ChemistAtPlay Body Care", version: "1.0.0" });
     instance.onerror = console.error;
     instance.onhostcontextchanged = (params) => {
       setHostContext((prev) => ({ ...prev, ...params }));
@@ -237,6 +239,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
   const [pollingPaymentId, setPollingPaymentId] = useState<string | null>(null);
   const [authUrl, setAuthUrl] = useState<string | null>(null);
   const [paymentSuccess, setPaymentSuccess] = useState<any | null>(null);
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
   const calculateDiscount = (price: number, comparePrice: number) => {
     return Math.round(((comparePrice - price) / comparePrice) * 100);
@@ -258,7 +261,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
         vendor: product.vendor,
         price: product.price,
         quantity: 1,
-        image: product.image
+        gradient: product.gradient
       }];
     });
   };
@@ -473,7 +476,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
         borderBottom: "1px solid BLADE.colors.border.subtle"
       }}>
         <h1 style={{ margin: 0, fontSize: "20px", fontWeight: "600" }}>
-          {paymentSuccess ? "Payment Confirmed" : showPayment ? "Payment Method" : showCheckout ? "Checkout" : "Tira Beauty Store"}
+          {paymentSuccess ? "Payment Confirmed" : showPayment ? "Payment Method" : showCheckout ? "Checkout" : "Body Wash Collection"}
         </h1>
         <p style={{ margin: "4px 0 0 0", fontSize: "13px", color: "#666" }}>
           {paymentSuccess 
@@ -484,7 +487,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 ? "Select a saved card to complete payment" 
                 : showCheckout 
                   ? `Review your ${getTotalItems()} items` 
-                  : "Scroll to browse products →"}
+                  : "Swipe to explore our collection →"}
         </p>
       </header>
 
@@ -951,189 +954,456 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
         </div>
         )
       ) : !showCheckout ? (
-        // Products View
+        // Products View with Modern Mobile UI
         <>
-      {/* Products Horizontal Scroll */}
-      <main style={{
-        position: "relative",
-        padding: "20px 0",
-        overflowX: "auto",
-        scrollSnapType: "x mandatory",
-        WebkitOverflowScrolling: "touch"
+      {/* Main Container with Blue Border */}
+      <div style={{
+        maxWidth: "480px",
+        margin: "16px auto",
+        background: "#F9FAFB",
+        borderRadius: "20px",
+        border: "2px solid #93C5FD",
+        padding: "16px",
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)"
       }}>
-        {/* Scroll hint gradient */}
-        <div style={{
-          position: "absolute",
-          right: 0,
-          top: 0,
-          bottom: 0,
-          width: "40px",
-          pointerEvents: "none",
-          zIndex: 1
-        }}></div>
+        {/* Razorpay Trust Badge Section */}
         <div style={{
           display: "flex",
-          gap: "16px",
-          paddingBottom: "8px",
-          paddingLeft: "16px",
-          paddingRight: "56px"
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "16px",
+          paddingBottom: "12px"
         }}>
-          {PRODUCTS.map((product) => (
-            <div
-              key={product.id}
-              style={{
-                background: BLADE.colors.surface.background.secondary,
-                borderRadius: BLADE.borderRadius.medium,
-                overflow: "hidden",
-                border: `1px solid ${BLADE.colors.border.subtle}`,
-                transition: "all 0.2s ease",
-                cursor: "pointer",
-                minWidth: "180px",
-                maxWidth: "180px",
-                flexShrink: 0,
-                scrollSnapAlign: "start",
-                scrollSnapStop: "always"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = BLADE.colors.border.muted;
-                e.currentTarget.style.transform = "scale(1.02)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = BLADE.colors.border.subtle;
-                e.currentTarget.style.transform = "scale(1)";
-              }}
-            >
-              {/* Product Image */}
-              <div style={{
-                position: "relative",
-                paddingTop: "100%",
-                overflow: "hidden",
-                background: BLADE.colors.surface.background.primary
-              }}>
-                <img
-                  src={product.image}
-                  alt={product.title}
+          {/* Left: Razorpay Trusted Business */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            background: "#FFFFFF",
+            padding: "6px 12px",
+            borderRadius: "20px",
+            border: "1px solid #E5E7EB",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.05)"
+          }}>
+            <div style={{
+              width: "16px",
+              height: "16px",
+              background: "#10B981",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "10px",
+              color: "white",
+              fontWeight: "700"
+            }}>✓</div>
+            <span style={{
+              fontSize: "11px",
+              fontWeight: "500",
+              color: "#374151"
+            }}>Razorpay Trusted Business</span>
+          </div>
+
+          {/* Right: Secured by Razorpay */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "4px"
+          }}>
+            <span style={{
+              fontSize: "10px",
+              color: "#6B7280"
+            }}>Secured by</span>
+            <span style={{
+              fontSize: "11px",
+              fontWeight: "600",
+              color: "#374151",
+              fontStyle: "italic"
+            }}>Razorpay</span>
+          </div>
+        </div>
+
+        {/* Product Carousel */}
+        <div style={{
+          overflowX: "auto",
+          scrollSnapType: "x mandatory",
+          WebkitOverflowScrolling: "touch",
+          marginBottom: "16px",
+          paddingBottom: "8px"
+        }}>
+          <div style={{
+            display: "flex",
+            gap: "12px"
+          }}>
+            {PRODUCTS.map((product) => {
+              const cartItem = cart.find(item => item.id === product.id);
+              const isSelected = selectedProductId === product.id;
+              
+              return (
+                <div
+                  key={product.id}
+                  onClick={() => setSelectedProductId(product.id)}
                   style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover"
+                    background: "white",
+                    borderRadius: "16px",
+                    minWidth: "220px",
+                    maxWidth: "220px",
+                    flexShrink: 0,
+                    scrollSnapAlign: "center",
+                    border: isSelected ? "2px solid #9333EA" : "1px solid #E5E7EB",
+                    boxShadow: isSelected ? "0 4px 12px rgba(147, 51, 234, 0.15)" : "0 2px 8px rgba(0, 0, 0, 0.04)",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    overflow: "hidden"
                   }}
-                />
-                {/* Discount Badge */}
-                <div style={{
-                  position: "absolute",
-                  top: BLADE.spacing[3],
-                  right: BLADE.spacing[3],
-                  background: BLADE.colors.feedback.negative,
-                  color: BLADE.colors.text.onPrimary,
-                  padding: `${BLADE.spacing[2]} ${BLADE.spacing[3]}`,
-                  borderRadius: BLADE.borderRadius.small,
-                  fontSize: BLADE.typography.fontSize[10],
-                  fontWeight: BLADE.typography.fontWeight.semibold
-                }}>
-                  {calculateDiscount(product.price, product.comparePrice)}% OFF
+                >
+                  {/* Product Image Area with Gradient */}
+                  <div style={{
+                    background: product.gradient,
+                    padding: "32px 24px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    position: "relative",
+                    minHeight: "180px"
+                  }}>
+                    {/* Placeholder for body wash bottle - using simple SVG representation */}
+                    <div style={{
+                      width: "80px",
+                      height: "140px",
+                      background: "rgba(255, 255, 255, 0.95)",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                      position: "relative",
+                      display: "flex",
+                      flexDirection: "column",
+                      overflow: "hidden"
+                    }}>
+                      {/* Bottle Cap */}
+                      <div style={{
+                        width: "40px",
+                        height: "20px",
+                        background: product.id === 1 ? "#4F90CD" : product.id === 2 ? "#D4A83A" : product.id === 3 ? "#E89460" : "#E86A78",
+                        margin: "0 auto",
+                        borderRadius: "4px 4px 0 0"
+                      }}></div>
+                      {/* Label */}
+                      <div style={{
+                        flex: 1,
+                        background: "white",
+                        margin: "8px",
+                        borderRadius: "4px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        padding: "4px"
+                      }}>
+                        <div style={{
+                          fontSize: "8px",
+                          fontWeight: "600",
+                          textAlign: "center",
+                          color: "#374151",
+                          marginBottom: "2px"
+                        }}>ChemistAtPlay</div>
+                        <div style={{
+                          width: "90%",
+                          height: "16px",
+                          background: product.id === 1 ? "#4F90CD" : product.id === 2 ? "#D4A83A" : product.id === 3 ? "#E89460" : "#E86A78",
+                          borderRadius: "2px",
+                          fontSize: "6px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "white",
+                          fontWeight: "600",
+                          marginBottom: "2px"
+                        }}>BODY WASH</div>
+                        <div style={{
+                          fontSize: "5px",
+                          color: "#6B7280",
+                          textAlign: "center"
+                        }}>Exfoliating Formula</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Product Details */}
+                  <div style={{
+                    padding: "16px"
+                  }}>
+                    {/* Rating */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                      marginBottom: "8px"
+                    }}>
+                      <span style={{
+                        color: "#16A34A",
+                        fontSize: "14px"
+                      }}>★</span>
+                      <span style={{
+                        fontSize: "13px",
+                        fontWeight: "600",
+                        color: "#374151"
+                      }}>{product.rating}</span>
+                      <span style={{
+                        fontSize: "12px",
+                        color: "#9CA3AF"
+                      }}>({product.reviews})</span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 style={{
+                      margin: "0 0 4px 0",
+                      fontSize: "15px",
+                      fontWeight: "600",
+                      color: "#1F2937"
+                    }}>
+                      {product.title}
+                    </h3>
+
+                    {/* Subtitle */}
+                    <p style={{
+                      margin: "0 0 8px 0",
+                      fontSize: "12px",
+                      color: "#6B7280",
+                      lineHeight: "1.4"
+                    }}>
+                      {product.subtitle}
+                    </p>
+
+                    {/* Size Dropdown */}
+                    <select style={{
+                      width: "100%",
+                      padding: "6px 8px",
+                      background: "white",
+                      border: "1px solid #E5E7EB",
+                      borderRadius: "6px",
+                      fontSize: "12px",
+                      color: "#374151",
+                      marginBottom: "12px",
+                      cursor: "pointer"
+                    }}>
+                      <option>{product.size}</option>
+                    </select>
+
+                    {/* Price Row */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      marginBottom: "12px"
+                    }}>
+                      <span style={{
+                        fontSize: "18px",
+                        fontWeight: "700",
+                        color: "#1F2937"
+                      }}>₹{product.price}</span>
+                      <span style={{
+                        fontSize: "13px",
+                        color: "#9CA3AF",
+                        textDecoration: "line-through"
+                      }}>₹{product.comparePrice}</span>
+                      <span style={{
+                        fontSize: "12px",
+                        color: "#16A34A",
+                        fontWeight: "600"
+                      }}>90%off</span>
+                    </div>
+
+                    {/* Add to Cart Button or Quantity Selector */}
+                    {cartItem ? (
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        background: "#F3F4F6",
+                        borderRadius: "8px",
+                        padding: "8px 12px"
+                      }}>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            updateQuantity(product.id, cartItem.quantity - 1);
+                          }}
+                          style={{
+                            background: "transparent",
+                            border: "none",
+                            cursor: "pointer",
+                            fontSize: "18px",
+                            color: "#6B7280",
+                            padding: "0",
+                            width: "24px",
+                            height: "24px"
+                          }}
+                        >
+                          −
+                        </button>
+                        
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeFromCart(product.id);
+                          }}
+                          style={{
+                            background: "transparent",
+                            border: "none",
+                            cursor: "pointer",
+                            fontSize: "16px",
+                            color: "#EF4444",
+                            padding: "0"
+                          }}
+                        >
+                          🗑
+                        </button>
+                        
+                        <span style={{
+                          fontSize: "14px",
+                          fontWeight: "600",
+                          color: "#374151",
+                          minWidth: "20px",
+                          textAlign: "center"
+                        }}>
+                          {cartItem.quantity}
+                        </span>
+                        
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            updateQuantity(product.id, cartItem.quantity + 1);
+                          }}
+                          style={{
+                            background: "transparent",
+                            border: "none",
+                            cursor: "pointer",
+                            fontSize: "18px",
+                            color: "#6B7280",
+                            padding: "0",
+                            width: "24px",
+                            height: "24px"
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart(product);
+                        }}
+                        style={{
+                          width: "100%",
+                          background: "white",
+                          color: "#4F46E5",
+                          border: "1.5px solid #4F46E5",
+                          padding: "10px",
+                          borderRadius: "8px",
+                          fontSize: "14px",
+                          fontWeight: "600",
+                          cursor: "pointer",
+                          transition: "all 0.2s ease"
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = "#4F46E5";
+                          e.currentTarget.style.color = "white";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = "white";
+                          e.currentTarget.style.color = "#4F46E5";
+                        }}
+                      >
+                        Add +
+                      </button>
+                    )}
+                  </div>
                 </div>
-                {/* Category Badge */}
-                <div style={{
-                  position: "absolute",
-                  top: BLADE.spacing[3],
-                  left: BLADE.spacing[3],
-                  background: "rgba(255, 255, 255, 0.95)",
-                  color: BLADE.colors.text.secondary,
-                  padding: `${BLADE.spacing[2]} ${BLADE.spacing[3]}`,
-                  borderRadius: BLADE.borderRadius.small,
-                  fontSize: BLADE.typography.fontSize[10],
-                  fontWeight: BLADE.typography.fontWeight.medium
-                }}>
-                  {product.category}
-                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mini Cart Summary */}
+        {cart.length > 0 && (
+          <div style={{
+            background: "white",
+            borderRadius: "12px",
+            padding: "16px",
+            border: "1px solid #E5E7EB",
+            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.04)"
+          }}>
+            {/* Product Thumbnails and Price */}
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              marginBottom: "12px"
+            }}>
+              {/* Mini Thumbnails */}
+              <div style={{
+                display: "flex",
+                gap: "8px"
+              }}>
+                {cart.slice(0, 2).map((item) => (
+                  <div
+                    key={item.id}
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "8px",
+                      background: item.gradient,
+                      border: "1px solid #E5E7EB"
+                    }}
+                  ></div>
+                ))}
               </div>
 
-              {/* Product Details */}
-              <div style={{ padding: BLADE.spacing[4] }}>
-                {/* Vendor */}
+              {/* Price and Product Count */}
+              <div style={{ flex: 1 }}>
                 <div style={{
-                  color: BLADE.colors.text.secondary,
-                  fontSize: BLADE.typography.fontSize[10],
-                  fontWeight: BLADE.typography.fontWeight.medium,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.3px",
-                  marginBottom: BLADE.spacing[2]
-                }}>
-                  {product.vendor}
-                </div>
-
-                {/* Title */}
-                <h3 style={{
-                  margin: `0 0 ${BLADE.spacing[3]} 0`,
-                  fontSize: BLADE.typography.fontSize[12],
-                  fontWeight: BLADE.typography.fontWeight.medium,
-                  color: BLADE.colors.text.primary,
-                  lineHeight: "1.3",
-                  height: "34px",
-                  overflow: "hidden",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical"
-                }}>
-                  {product.title}
-                </h3>
-
-                {/* Price Section */}
+                  fontSize: "18px",
+                  fontWeight: "700",
+                  color: "#1F2937"
+                }}>₹{getTotalPrice()}</div>
                 <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  marginBottom: "10px"
-                }}>
-                  <span style={{
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "BLADE.colors.interactive.primaryHover"
-                  }}>
-                    ₹{product.price}
-                  </span>
-                  <span style={{
-                    fontSize: "12px",
-                    color: "#a3a3a3",
-                    textDecoration: "line-through"
-                  }}>
-                    ₹{product.comparePrice}
-                  </span>
-                </div>
-
-                {/* Add to Cart Button */}
-                <button
-                  style={{
-                    width: "100%",
-                    background: BLADE.colors.interactive.primary,
-                    color: BLADE.colors.text.onPrimary,
-                    border: "none",
-                    padding: BLADE.spacing[3],
-                    borderRadius: BLADE.borderRadius.small,
-                    fontSize: BLADE.typography.fontSize[12],
-                    fontWeight: BLADE.typography.fontWeight.medium,
-                    cursor: "pointer",
-                    transition: "background 0.2s ease"
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = BLADE.colors.interactive.primaryHover;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = BLADE.colors.interactive.primary;
-                  }}
-                  onClick={() => addToCart(product)}
-                >
-                  Add to Cart
-                </button>
+                  fontSize: "12px",
+                  color: "#6B7280"
+                }}>{getTotalItems()} Products</div>
               </div>
             </div>
-          ))}
-        </div>
-      </main>
+
+            {/* View Cart Button */}
+            <button
+              onClick={() => setShowCheckout(true)}
+              style={{
+                width: "100%",
+                background: "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)",
+                color: "white",
+                border: "none",
+                padding: "14px",
+                borderRadius: "10px",
+                fontSize: "15px",
+                fontWeight: "600",
+                cursor: "pointer",
+                boxShadow: "0 4px 12px rgba(79, 70, 229, 0.3)",
+                transition: "all 0.2s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 6px 16px rgba(79, 70, 229, 0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(79, 70, 229, 0.3)";
+              }}
+            >
+              View Cart
+            </button>
+          </div>
+        )}
+      </div>
         </>
       ) : (
         // Checkout View
@@ -1152,17 +1422,15 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               marginBottom: "12px",
               border: "1px solid BLADE.colors.border.subtle"
             }}>
-              <img
-                src={item.image}
-                alt={item.title}
+              <div
                 style={{
                   width: "80px",
                   height: "80px",
-                  objectFit: "cover",
                   borderRadius: "6px",
-                  flexShrink: 0
+                  flexShrink: 0,
+                  background: item.gradient
                 }}
-              />
+              ></div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{
                   fontSize: "10px",
@@ -1371,7 +1639,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             </button>
           </div>
         )}
-        <p style={{ margin: 0, color: "#a3a3a3", fontSize: "11px" }}>Tira Beauty Store Demo - Powered by Claude MCP</p>
+        <p style={{ margin: 0, color: "#a3a3a3", fontSize: "11px" }}>ChemistAtPlay Demo - Powered by Claude MCP</p>
       </footer>
 
       {/* Notification Toast */}
