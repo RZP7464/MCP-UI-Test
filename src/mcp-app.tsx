@@ -404,9 +404,13 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
       const redirectAction = data.next?.find((action: any) => action.action === 'redirect');
       
       if (redirectAction && redirectAction.url) {
-        // Store auth URL to display to user
+        // Store auth URL and auto-open in new tab
         setAuthUrl(redirectAction.url);
-        showNotification('Please copy the authentication URL below', 'success');
+        
+        // Open authentication URL in new tab
+        window.open(redirectAction.url, '_blank');
+        
+        showNotification('Complete authentication in the new tab', 'success');
         
         // Start polling for payment status
         setIsPollingPayment(true);
@@ -485,7 +489,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
         borderBottom: "1px solid BLADE.colors.border.subtle"
       }}>
         <h1 style={{ margin: 0, fontSize: "20px", fontWeight: "600" }}>
-          {paymentSuccess ? "Payment Confirmed" : showPayment ? "Payment Method" : showCheckout ? "Checkout" : "Tira Beauty Store"}
+          {paymentSuccess ? "Payment Confirmed" : showPayment ? "Pay using saved card" : showCheckout ? "Checkout" : "Tira Beauty Store"}
         </h1>
         <p style={{ margin: "4px 0 0 0", fontSize: "13px", color: "#666" }}>
           {paymentSuccess 
@@ -493,7 +497,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             : isPollingPayment 
               ? `Waiting for payment confirmation... (${pollingPaymentId})` 
               : showPayment 
-                ? "Select a saved card to complete payment" 
+                ? "Select your saved card to complete payment" 
                 : showCheckout 
                   ? `Review your ${getTotalItems()} items` 
                   : "Swipe to explore our collection →"}
@@ -642,19 +646,25 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 e.currentTarget.style.background = "BLADE.colors.text.primary";
               }}
               onClick={() => {
-                // Reset everything and go back to products
-                setPaymentSuccess(null);
-                setCart([]);
-                setShowPayment(false);
-                setShowCheckout(false);
-                setSelectedCard(null);
+                // Reset everything and redirect to products page
+                const redirectUrl = "https://mcp-ui-test-production.up.railway.app/"; // You can change this URL
+                window.open(redirectUrl, '_blank');
+                
+                // Reset state after a short delay
+                setTimeout(() => {
+                  setPaymentSuccess(null);
+                  setCart([]);
+                  setShowPayment(false);
+                  setShowCheckout(false);
+                  setSelectedCard(null);
+                }, 500);
               }}
             >
               Back to Products
             </button>
           </div>
         ) : isPollingPayment && authUrl ? (
-          // Polling / Authentication View
+          // Polling / Authentication View - Auto-open URL in new tab
           <div style={{
             padding: "40px 16px",
             maxWidth: "600px",
@@ -678,7 +688,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               color: "BLADE.colors.text.primary", 
               marginBottom: "12px" 
             }}>
-              Waiting for Payment Confirmation
+              Complete Payment Authentication
             </h2>
 
             <p style={{ 
@@ -687,86 +697,8 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               marginBottom: "24px",
               lineHeight: "1.5"
             }}>
-              Click the URL below to select it, then copy and paste it into a new browser tab.
+              We've opened the authentication page in a new tab. Please complete the OTP or 3D Secure verification there.
             </p>
-
-            {/* Authentication URL - Click to Select */}
-            <div
-              onClick={(e) => {
-                const selection = window.getSelection();
-                const range = document.createRange();
-                range.selectNodeContents(e.currentTarget.querySelector('div') as Node);
-                selection?.removeAllRanges();
-                selection?.addRange(range);
-              }}
-              style={{
-                background: "BLADE.colors.surface.background.secondary",
-                border: "2px solid BLADE.colors.text.primary",
-                borderRadius: "8px",
-                padding: "16px",
-                marginBottom: "24px",
-                cursor: "pointer",
-                transition: "background 0.2s ease"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#f0f0f0";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "BLADE.colors.surface.background.secondary";
-              }}
-            >
-              <div style={{
-                fontSize: "11px",
-                color: "#737373",
-                marginBottom: "6px",
-                fontWeight: "500"
-              }}>
-                👆 Click here to select URL:
-              </div>
-              <div style={{
-                fontSize: "12px",
-                fontFamily: "monospace",
-                color: "BLADE.colors.text.primary",
-                wordBreak: "break-all",
-                lineHeight: "1.6",
-                userSelect: "all"
-              }}>
-                {authUrl}
-              </div>
-            </div>
-
-            {/* Instructions Box */}
-            <div style={{
-              background: "#fff7ed",
-              border: "1px solid #fed7aa",
-              borderRadius: "8px",
-              padding: "20px",
-              marginBottom: "24px",
-              textAlign: "left"
-            }}>
-              <div style={{
-                fontSize: "14px",
-                fontWeight: "600",
-                color: "#9a3412",
-                marginBottom: "12px"
-              }}>
-                📋 Next Steps:
-              </div>
-              <ol style={{
-                margin: 0,
-                paddingLeft: "20px",
-                fontSize: "13px",
-                color: "#9a3412",
-                lineHeight: "1.8"
-              }}>
-                <li><strong>Click the box above</strong> to select the URL</li>
-                <li><strong>Copy</strong> it (Ctrl+C or Cmd+C)</li>
-                <li><strong>Open</strong> a new browser tab</li>
-                <li><strong>Paste</strong> the URL and press Enter</li>
-                <li><strong>Complete</strong> the OTP or 3D Secure verification</li>
-                <li><strong>Return here</strong> - we'll automatically detect success!</li>
-              </ol>
-            </div>
 
             <p style={{ 
               fontSize: "12px", 
@@ -794,7 +726,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
         }}>
           <div style={{ marginBottom: "20px" }}>
             <h3 style={{ fontSize: "14px", fontWeight: "600", color: "BLADE.colors.text.primary", marginBottom: "12px" }}>
-              Saved Cards
+              Your Saved Cards
             </h3>
             {SAVED_CARDS.items.map((cardData) => (
               <div
