@@ -241,10 +241,6 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
   const [paymentSuccess, setPaymentSuccess] = useState<any | null>(null);
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-  const calculateDiscount = (price: number, comparePrice: number) => {
-    return Math.round(((comparePrice - price) / comparePrice) * 100);
-  };
-
   const addToCart = (product: typeof PRODUCTS[0]) => {
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.id === product.id);
