@@ -11,6 +11,12 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import cors from "cors";
 import type { Request, Response } from "express";
 import { createServer } from "./server.js";
+import express from "express";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Starts an MCP server with Streamable HTTP transport in stateless mode.
@@ -24,6 +30,15 @@ export async function startStreamableHTTPServer(
 
   const app = createMcpExpressApp({ host: "0.0.0.0" });
   app.use(cors());
+
+  // Serve static files from the public directory
+  // In development: ./public, in production (dist): dist/public
+  const isProduction = __filename.includes("dist");
+  const publicPath = isProduction 
+    ? path.join(__dirname, "public")
+    : path.join(__dirname, "public");
+  app.use("/public", express.static(publicPath));
+  console.log(`Serving static files from: ${publicPath}`);
 
   app.all("/mcp", async (req: Request, res: Response) => {
     const server = createServer();

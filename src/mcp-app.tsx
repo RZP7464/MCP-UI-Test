@@ -19,7 +19,7 @@ const PRODUCTS = [
     vendor: "Essence",
     price: 340,
     comparePrice: 398,
-    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/essence/1034836/0/cuqsTzJrnf-VCZaeBSdNW-1034836_1.jpg",
+    image: "https://mcp-ui-test-production.up.railway.app/public/images/product-1-essence-lipstick.jpg",
     description: "Premium quality lipstick product for everyday use. Perfect for all skin types.",
     category: "Lipstick"
   },
@@ -29,7 +29,7 @@ const PRODUCTS = [
     vendor: "Lakme",
     price: 650,
     comparePrice: 748,
-    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/lakme/1120648/0/DICqDA3GWt-lPhtFtqmi-1120648_1.jpg",
+    image: "https://mcp-ui-test-production.up.railway.app/public/images/product-2-lakme-lipcolor.jpg",
     description: "Matte to glass finish liquid lip color. Long-lasting formula for all-day wear.",
     category: "Lipstick"
   },
@@ -39,7 +39,7 @@ const PRODUCTS = [
     vendor: "Typsy Beauty",
     price: 899,
     comparePrice: 1090,
-    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/typsy-beauty/1110418/0/MAGiDMxEio-2UcUVZVC2A-1110418-1.jpg",
+    image: "https://mcp-ui-test-production.up.railway.app/public/images/product-3-typsy-mascara.jpg",
     description: "Professional curling mascara for dramatic lashes. Smudge-proof formula.",
     category: "Mascara"
   },
@@ -49,7 +49,7 @@ const PRODUCTS = [
     vendor: "Minimalist",
     price: 500,
     comparePrice: 622,
-    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/minimalist/1002796/0/l9hHlPvPp--d_xlBotlGj-1002796_1.jpg",
+    image: "https://mcp-ui-test-production.up.railway.app/public/images/product-4-minimalist-sunscreen.jpg",
     description: "High protection sunscreen with antioxidants. Perfect for daily sun protection.",
     category: "Sunscreen"
   },
@@ -59,7 +59,7 @@ const PRODUCTS = [
     vendor: "Essence",
     price: 580,
     comparePrice: 711,
-    image: "https://cdn.tiraz5.de/v2/super-fire-62c344/tirabz/wrkr/tiraz5/products/pictures/item/free/original/essence/1049107/0/BVmrW9fjvI-07uEgsrgt1-1049107_1.jpg",
+    image: "https://mcp-ui-test-production.up.railway.app/public/images/product-5-essence-eyeshadow.jpg",
     description: "30 stunning brown shades eyeshadow palette. Create endless eye looks.",
     category: "Eye Shadow"
   }
