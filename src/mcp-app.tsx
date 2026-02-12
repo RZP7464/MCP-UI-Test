@@ -894,10 +894,14 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               "Processing..."
             ) : (
               <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M22.436 0l-11.91 7.773-1.174 4.276 6.625-4.297L11.65 24h4.391l6.395-24z"/>
-                  <path d="M14.26 10.098L3.389 17.166 1.564 24h9.008l3.688-13.902z"/>
-                </svg>
+                <img 
+                  src="https://mcp-ui-test-production.up.railway.app/public/images/razorpaylogo.png"
+                  alt="Razorpay"
+                  style={{
+                    height: "16px",
+                    width: "auto"
+                  }}
+                />
                 {`Pay ₹${getTotalPrice()}`}
               </span>
             )}
@@ -1309,171 +1313,279 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
       </div>
         </>
       ) : (
-        // Checkout View
+        // Checkout View - Updated Design
         <div style={{
+          maxWidth: "612px",
+          margin: "16px auto",
+          background: "#F9FAFB",
+          borderRadius: "20px",
+          border: "2px solid #93C5FD",
           padding: "20px 16px",
-          maxWidth: "600px",
-          margin: "0 auto"
         }}>
-          {cart.map((item) => (
-            <div key={item.id} style={{
-              display: "flex",
-              gap: "12px",
-              padding: "16px",
-              background: "BLADE.colors.surface.background.secondary",
-              borderRadius: "8px",
-              marginBottom: "12px",
-              border: "1px solid BLADE.colors.border.subtle"
-            }}>
-              <img
-                src={item.image}
-                alt={item.title}
-                style={{
-                  width: "80px",
-                  height: "80px",
-                  objectFit: "contain",
-                  borderRadius: "6px",
-                  flexShrink: 0,
-                  background: "white",
-                  border: "1px solid #E5E7EB"
-                }}
-              />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{
-                  fontSize: "10px",
-                  color: "#737373",
-                  textTransform: "uppercase",
-                  marginBottom: "4px"
-                }}>
-                  {item.vendor}
-                </div>
-                <div style={{
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  color: "BLADE.colors.text.primary",
-                  marginBottom: "12px",
-                  lineHeight: "1.3"
-                }}>
-                  {item.title}
-                </div>
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between"
-                }}>
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    background: "white",
-                    border: "1px solid BLADE.colors.border.subtle",
-                    borderRadius: "6px",
-                    padding: "6px 8px"
-                  }}>
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      style={{
-                        background: "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                        fontSize: "18px",
-                        color: "#525252",
-                        padding: "0 4px",
-                        lineHeight: 1
-                      }}
-                    >
-                      −
-                    </button>
-                    <span style={{ fontSize: "14px", fontWeight: "500", minWidth: "24px", textAlign: "center" }}>
-                      {item.quantity}
-                    </span>
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      style={{
-                        background: "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                        fontSize: "18px",
-                        color: "#525252",
-                        padding: "0 4px",
-                        lineHeight: 1
-                      }}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div style={{ fontSize: "16px", fontWeight: "600", color: "BLADE.colors.text.primary" }}>
-                    ₹{item.price * item.quantity}
-                  </div>
-                </div>
-              </div>
-              <button
-                onClick={() => removeFromCart(item.id)}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: "20px",
-                  color: "#a3a3a3",
-                  padding: "0",
-                  alignSelf: "flex-start",
-                  lineHeight: 1
-                }}
-              >
-                ×
-              </button>
-            </div>
-          ))}
-
-          {/* Total Section */}
+          {/* Products Header with Collapse Button */}
           <div style={{
-            padding: "20px",
-            background: "BLADE.colors.surface.background.secondary",
-            borderRadius: "8px",
-            border: "1px solid BLADE.colors.border.subtle",
-            marginTop: "20px"
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "16px"
           }}>
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "16px",
-              paddingBottom: "16px",
-              borderBottom: "1px solid BLADE.colors.border.subtle"
+            <h3 style={{
+              fontSize: "16px",
+              fontWeight: "600",
+              color: "#1F2937",
+              margin: 0
             }}>
-              <div style={{ fontSize: "14px", color: "#737373" }}>
-                Subtotal ({getTotalItems()} items)
-              </div>
-              <div style={{ fontSize: "18px", fontWeight: "600", color: "BLADE.colors.text.primary" }}>
-                ₹{getTotalPrice()}
-              </div>
-            </div>
+              Products ({getTotalItems()} Items)
+            </h3>
             <button
+              onClick={() => setShowCheckout(false)}
               style={{
-                width: "100%",
-                background: BLADE.colors.interactive.primary,
-                color: "white",
+                background: "#F3F4F6",
                 border: "none",
-                padding: "14px",
                 borderRadius: "8px",
-                fontSize: "15px",
-                fontWeight: "600",
+                width: "32px",
+                height: "32px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 cursor: "pointer",
-                transition: "background 0.2s ease"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "BLADE.colors.interactive.primaryHover";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "BLADE.colors.text.primary";
-              }}
-              onClick={() => {
-                setShowPayment(true);
+                fontSize: "16px",
+                color: "#6B7280"
               }}
             >
-              Place Order - ₹{getTotalPrice()}
+              ∧
             </button>
           </div>
+
+          {/* Product List */}
+          {cart.map((item) => {
+            const product = PRODUCTS.find(p => p.id === item.id);
+            return (
+              <div key={item.id} style={{
+                background: "white",
+                borderRadius: "12px",
+                padding: "16px",
+                marginBottom: "12px",
+                border: "2px solid #E0E7FF",
+                position: "relative"
+              }}>
+                <div style={{
+                  display: "flex",
+                  gap: "12px",
+                  alignItems: "flex-start"
+                }}>
+                  {/* Product Image */}
+                  <div style={{
+                    width: "80px",
+                    height: "80px",
+                    flexShrink: 0,
+                    background: "#F9FAFB",
+                    borderRadius: "8px",
+                    padding: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}>
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain"
+                      }}
+                    />
+                  </div>
+
+                  {/* Product Details */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{
+                      fontSize: "15px",
+                      fontWeight: "600",
+                      color: "#1F2937",
+                      marginBottom: "8px",
+                      lineHeight: "1.3"
+                    }}>
+                      {item.title}
+                    </div>
+
+                    {/* Size and Qty Dropdowns */}
+                    <div style={{
+                      display: "flex",
+                      gap: "12px",
+                      marginBottom: "12px"
+                    }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{
+                          fontSize: "11px",
+                          color: "#6B7280",
+                          marginBottom: "4px"
+                        }}>Size:</div>
+                        <select style={{
+                          width: "100%",
+                          padding: "6px 8px",
+                          background: "white",
+                          border: "1px solid #E5E7EB",
+                          borderRadius: "6px",
+                          fontSize: "12px",
+                          color: "#374151",
+                          cursor: "pointer"
+                        }}>
+                          <option>{product?.size || "100ml"}</option>
+                        </select>
+                      </div>
+                      
+                      <div style={{ flex: 1 }}>
+                        <div style={{
+                          fontSize: "11px",
+                          color: "#6B7280",
+                          marginBottom: "4px"
+                        }}>Qty:</div>
+                        <select 
+                          value={item.quantity}
+                          onChange={(e) => updateQuantity(item.id, parseInt(e.currentTarget.value))}
+                          style={{
+                            width: "100%",
+                            padding: "6px 8px",
+                            background: "white",
+                            border: "1px solid #E5E7EB",
+                            borderRadius: "6px",
+                            fontSize: "12px",
+                            color: "#374151",
+                            cursor: "pointer"
+                          }}
+                        >
+                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                            <option key={num} value={num}>{num}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Price Row */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px"
+                    }}>
+                      <span style={{
+                        fontSize: "16px",
+                        fontWeight: "700",
+                        color: "#1F2937"
+                      }}>₹{item.price * item.quantity}</span>
+                      <span style={{
+                        fontSize: "12px",
+                        color: "#9CA3AF",
+                        textDecoration: "line-through"
+                      }}>₹{product?.comparePrice || 1149}</span>
+                      <span style={{
+                        fontSize: "11px",
+                        color: "#16A34A",
+                        fontWeight: "600"
+                      }}>Save ₹{((product?.comparePrice || 1149) - item.price) * item.quantity}</span>
+                    </div>
+                  </div>
+
+                  {/* Remove Button */}
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      fontSize: "18px",
+                      color: "#9CA3AF",
+                      padding: "0",
+                      lineHeight: 1
+                    }}
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Bill Details Section */}
+          <div style={{
+            background: "white",
+            borderRadius: "12px",
+            padding: "16px",
+            marginTop: "16px"
+          }}>
+            <h3 style={{
+              fontSize: "15px",
+              fontWeight: "600",
+              color: "#1F2937",
+              margin: "0 0 12px 0"
+            }}>
+              Bill Details
+            </h3>
+
+            {/* Savings Badge */}
+            <div style={{
+              background: "#ECFDF5",
+              borderRadius: "8px",
+              padding: "12px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              marginBottom: "16px"
+            }}>
+              <span style={{ fontSize: "18px" }}>😊</span>
+              <span style={{
+                fontSize: "13px",
+                color: "#059669",
+                fontWeight: "500"
+              }}>
+                You saved ₹{cart.reduce((sum, item) => {
+                  const product = PRODUCTS.find(p => p.id === item.id);
+                  return sum + ((product?.comparePrice || 1149) - item.price) * item.quantity;
+                }, 0)} on this order!
+              </span>
+            </div>
+          </div>
+
+          {/* Pay Button */}
+          <button
+            onClick={() => setShowPayment(true)}
+            style={{
+              width: "100%",
+              background: "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)",
+              color: "white",
+              border: "none",
+              padding: "14px",
+              borderRadius: "10px",
+              fontSize: "15px",
+              fontWeight: "600",
+              cursor: "pointer",
+              marginTop: "16px",
+              boxShadow: "0 4px 12px rgba(79, 70, 229, 0.3)",
+              transition: "all 0.2s ease",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px"
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow = "0 6px 16px rgba(79, 70, 229, 0.4)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(79, 70, 229, 0.3)";
+            }}
+          >
+            <img 
+              src="https://mcp-ui-test-production.up.railway.app/public/images/razorpaylogo.png"
+              alt="Razorpay"
+              style={{
+                height: "16px",
+                width: "auto"
+              }}
+            />
+            Pay ₹{getTotalPrice()}
+          </button>
         </div>
       )}
 
