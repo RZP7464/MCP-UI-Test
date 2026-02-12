@@ -267,8 +267,16 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
       const redirectAction = data.next?.find((action: any) => action.action === 'redirect');
       
       if (redirectAction && redirectAction.url) {
-        // Redirect to authentication URL
-        window.location.href = redirectAction.url;
+        // Open authentication URL in new tab
+        window.open(redirectAction.url, '_blank');
+        showNotification('Opening payment authentication in new tab...', 'success');
+        // Clear cart after redirect
+        setTimeout(() => {
+          setCart([]);
+          setShowPayment(false);
+          setShowCheckout(false);
+          setSelectedCard(null);
+        }, 2000);
       } else {
         // Payment successful without redirect
         showNotification(`Payment successful! Payment ID: ${data.razorpay_payment_id}`, 'success');
