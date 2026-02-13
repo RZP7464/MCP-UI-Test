@@ -13,7 +13,7 @@ const DIST_DIR = import.meta.filename.endsWith(".ts")
  */
 export function createServer(): McpServer {
   const server = new McpServer({
-    name: "Tira Beauty Store MCP Server",
+    name: "Premium Matte Lipstick Collection - The Beauty Store",
     version: "1.0.0",
   });
 
@@ -27,13 +27,13 @@ export function createServer(): McpServer {
     "show-products",
     {
       title: "Show Products",
-      description: "Display an interactive beauty products catalog with shopping cart functionality.",
+      description: "Display curated premium red lipsticks with soft-matte texture - long-lasting, no gloss, from The Beauty Store.",
       inputSchema: {},
       _meta: { ui: { resourceUri } }, // Links this tool to its UI resource
     },
     async (): Promise<CallToolResult> => {
       const totalProducts = 8;
-      return { content: [{ type: "text", text: `Showing ${totalProducts} beauty products from Tira catalog.` }] };
+      return { content: [{ type: "text", text: `Showing ${totalProducts} premium red matte lipsticks - long-lasting, soft-matte texture, no gloss.` }] };
     },
   );
 

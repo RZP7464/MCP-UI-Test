@@ -11,110 +11,110 @@ import {
 import { useEffect, useState } from "preact/hooks";
 import { render } from "preact";
 
-// Hardcoded products - Tira Lipstick Collection
+// Hardcoded products - Premium Red Matte Long-Lasting Lipstick Collection
 const PRODUCTS = [
   {
     id: 1,
-    title: "Essence Long Lasting Lipstick - 02 Just Perfect",
-    subtitle: "Premium quality lipstick product for everyday use",
+    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Red",
+    subtitle: "Long-lasting soft-matte texture, premium quality",
     vendor: "Essence",
-    price: 340,
-    comparePrice: 398,
+    price: 466,
+    comparePrice: 570,
     size: "3g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-1-essence.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-1-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
     category: "Lipstick"
   },
   {
     id: 2,
-    title: "Lakme 9 To 5 Matte To Glass Liquid Lip Color - Passion Pink",
-    subtitle: "Premium quality lipstick product for everyday use",
-    vendor: "Lakme",
-    price: 650,
-    comparePrice: 748,
-    size: "7.6g",
-    rating: 4.5,
-    reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-2-lakme.jpg",
-    category: "Lipstick"
-  },
-  {
-    id: 3,
     title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You",
-    subtitle: "Premium quality lipstick product for everyday use",
+    subtitle: "Long-lasting soft-matte texture, premium quality",
     vendor: "Essence",
     price: 430,
     comparePrice: 529,
     size: "3g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-3-essence.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-2-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
+    category: "Lipstick"
+  },
+  {
+    id: 3,
+    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Natural",
+    subtitle: "Long-lasting soft-matte texture, premium quality",
+    vendor: "Essence",
+    price: 420,
+    comparePrice: 486,
+    size: "3g",
+    rating: 4.5,
+    reviews: 24,
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-3-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
     category: "Lipstick"
   },
   {
     id: 4,
-    title: "Maybelline Lipstick Collection - Variant 1",
-    subtitle: "Premium quality lipstick product for everyday use",
-    vendor: "Maybelline",
-    price: 991,
-    comparePrice: 1162,
-    size: "175g",
+    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Pink",
+    subtitle: "Long-lasting soft-matte texture, premium quality",
+    vendor: "Essence",
+    price: 405,
+    comparePrice: 474,
+    size: "3g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-4-maybelline.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-4-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
     category: "Lipstick"
   },
   {
     id: 5,
-    title: "L'Oreal Lipstick Collection - Variant 1",
-    subtitle: "Premium quality lipstick product for everyday use",
-    vendor: "L'Oreal",
-    price: 2007,
-    comparePrice: 2446,
-    size: "68g",
+    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Rose",
+    subtitle: "Long-lasting soft-matte texture, premium quality",
+    vendor: "Essence",
+    price: 382,
+    comparePrice: 448,
+    size: "3g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-5-l-oreal.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-5-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
     category: "Lipstick"
   },
   {
     id: 6,
-    title: "Nykaa Lipstick Collection - Variant 1",
-    subtitle: "Premium quality lipstick product for everyday use",
-    vendor: "Nykaa",
-    price: 512,
-    comparePrice: 606,
-    size: "113g",
+    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Nude",
+    subtitle: "Long-lasting soft-matte texture, premium quality",
+    vendor: "Essence",
+    price: 417,
+    comparePrice: 484,
+    size: "3g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-6-nykaa.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-6-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
     category: "Lipstick"
   },
   {
     id: 7,
-    title: "Sugar Cosmetics Lipstick Collection - Variant 1",
-    subtitle: "Premium quality lipstick product for everyday use",
-    vendor: "Sugar Cosmetics",
-    price: 1193,
-    comparePrice: 1436,
-    size: "32g",
+    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Edition 373",
+    subtitle: "Long-lasting soft-matte texture, premium quality",
+    vendor: "Essence",
+    price: 430,
+    comparePrice: 498,
+    size: "3g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-7-sugar-cosmetics.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-7-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
     category: "Lipstick"
   },
   {
     id: 8,
-    title: "Plum Lipstick Collection - Variant 1",
-    subtitle: "Premium quality lipstick product for everyday use",
-    vendor: "Plum",
-    price: 573,
-    comparePrice: 694,
-    size: "120g",
+    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Edition 502",
+    subtitle: "Long-lasting soft-matte texture, premium quality",
+    vendor: "Essence",
+    price: 443,
+    comparePrice: 529,
+    size: "3g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-8-plum.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-8-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
     category: "Lipstick"
   }
 ];
@@ -451,7 +451,7 @@ function ProductCatalog({ hostContext, app }: ProductCatalogProps) {
         borderBottom: "1px solid BLADE.colors.border.subtle"
       }}>
         <h1 style={{ margin: 0, fontSize: "20px", fontWeight: "600" }}>
-          {paymentSuccess ? "Payment Confirmed" : showPayment ? "Pay using saved card" : showCheckout ? "Checkout" : "Tira Beauty Store"}
+          {paymentSuccess ? "Payment Confirmed" : showPayment ? "Pay using saved card" : showCheckout ? "Checkout" : "Premium Matte Lipsticks"}
         </h1>
         <p style={{ margin: "4px 0 0 0", fontSize: "13px", color: "#666" }}>
           {paymentSuccess 
@@ -462,7 +462,7 @@ function ProductCatalog({ hostContext, app }: ProductCatalogProps) {
                 ? "Select your saved card to complete payment" 
                 : showCheckout 
                   ? `Review your ${getTotalItems()} items` 
-                  : "Swipe to explore our collection →"}
+                  : "8H long-lasting, soft-matte texture, no gloss"}
         </p>
       </header>
 
