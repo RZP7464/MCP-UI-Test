@@ -11,111 +11,111 @@ import {
 import { useEffect, useState } from "preact/hooks";
 import { render } from "preact";
 
-// Hardcoded products - Premium Red Matte Long-Lasting Lipstick Collection
+// Hardcoded products - Red Lip Products Collection from Tira
 const PRODUCTS = [
   {
     id: 1,
-    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Red",
-    subtitle: "Long-lasting soft-matte texture, premium quality",
-    vendor: "Essence",
-    price: 466,
-    comparePrice: 570,
-    size: "3g",
+    title: "Miss Claire Glimmersticks Lipliner - L31 Crimson Red",
+    subtitle: "Long-lasting lip liner, smooth glide formula",
+    vendor: "Miss Claire",
+    price: 199,
+    comparePrice: 299,
+    size: "1.8g",
     rating: 4.5,
-    reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-1-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
-    category: "Lipstick"
+    reviews: 42,
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/miss-claire-948337.jpg",
+    category: "Lip Liner"
   },
   {
     id: 2,
-    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You",
-    subtitle: "Long-lasting soft-matte texture, premium quality",
-    vendor: "Essence",
-    price: 430,
-    comparePrice: 529,
-    size: "3g",
+    title: "Miss Claire Glimmersticks Lipliner - L40 Cadmium Red",
+    subtitle: "Precision tip for perfect definition",
+    vendor: "Miss Claire",
+    price: 199,
+    comparePrice: 299,
+    size: "1.8g",
     rating: 4.5,
-    reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-2-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
-    category: "Lipstick"
+    reviews: 38,
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/miss-claire-948340.jpg",
+    category: "Lip Liner"
   },
   {
     id: 3,
-    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Natural",
-    subtitle: "Long-lasting soft-matte texture, premium quality",
-    vendor: "Essence",
-    price: 420,
-    comparePrice: 486,
-    size: "3g",
-    rating: 4.5,
-    reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-3-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
-    category: "Lipstick"
+    title: "Miss Claire Butter Lip Balm - BL03 Red Velvet",
+    subtitle: "Nourishing butter formula with rich color",
+    vendor: "Miss Claire",
+    price: 149,
+    comparePrice: 249,
+    size: "4g",
+    rating: 4.6,
+    reviews: 56,
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/miss-claire-948341.jpg",
+    category: "Lip Balm"
   },
   {
     id: 4,
-    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Pink",
-    subtitle: "Long-lasting soft-matte texture, premium quality",
-    vendor: "Essence",
-    price: 405,
-    comparePrice: 474,
-    size: "3g",
-    rating: 4.5,
-    reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-4-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
+    title: "Sugar Cosmetics Matte As Hell Crayon Lipstick - Red Velvet",
+    subtitle: "Ultra-matte finish, transfer-proof formula",
+    vendor: "Sugar Cosmetics",
+    price: 599,
+    comparePrice: 799,
+    size: "2.8g",
+    rating: 4.7,
+    reviews: 89,
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/sugar-cosmetics-972579.jpg",
     category: "Lipstick"
   },
   {
     id: 5,
-    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Rose",
-    subtitle: "Long-lasting soft-matte texture, premium quality",
-    vendor: "Essence",
-    price: 382,
-    comparePrice: 448,
-    size: "3g",
-    rating: 4.5,
-    reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-5-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
+    title: "Sugar Cosmetics Matte As Hell Crayon Lipstick - Scarlet O'Hara",
+    subtitle: "Bold red with velvety matte finish",
+    vendor: "Sugar Cosmetics",
+    price: 599,
+    comparePrice: 799,
+    size: "2.8g",
+    rating: 4.7,
+    reviews: 95,
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/sugar-cosmetics-972598.jpg",
     category: "Lipstick"
   },
   {
     id: 6,
-    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Nude",
-    subtitle: "Long-lasting soft-matte texture, premium quality",
-    vendor: "Essence",
-    price: 417,
-    comparePrice: 484,
-    size: "3g",
+    title: "Miss Claire Glimmersticks Lipliner - L47 Fiesta Red",
+    subtitle: "Vibrant red with long-lasting formula",
+    vendor: "Miss Claire",
+    price: 199,
+    comparePrice: 299,
+    size: "1.8g",
     rating: 4.5,
-    reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-6-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
-    category: "Lipstick"
+    reviews: 34,
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/miss-claire-948447.jpg",
+    category: "Lip Liner"
   },
   {
     id: 7,
-    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Edition 373",
-    subtitle: "Long-lasting soft-matte texture, premium quality",
-    vendor: "Essence",
-    price: 430,
-    comparePrice: 498,
-    size: "3g",
-    rating: 4.5,
-    reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-7-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
+    title: "Sugar Cosmetics Matte As Hell Crayon Lipstick - Ruby Red",
+    subtitle: "Deep red with luxurious matte texture",
+    vendor: "Sugar Cosmetics",
+    price: 599,
+    comparePrice: 799,
+    size: "2.8g",
+    rating: 4.8,
+    reviews: 102,
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/sugar-cosmetics-972646.jpg",
     category: "Lipstick"
   },
   {
     id: 8,
-    title: "Essence Stay 8H Matte Liquid Lipstick - 08 I Dare You - Edition 502",
-    subtitle: "Long-lasting soft-matte texture, premium quality",
-    vendor: "Essence",
-    price: 443,
-    comparePrice: 529,
-    size: "3g",
+    title: "Miss Claire Glimmersticks Lipliner - L38 Warm Red",
+    subtitle: "Warm-toned red for everyday elegance",
+    vendor: "Miss Claire",
+    price: 199,
+    comparePrice: 299,
+    size: "1.8g",
     rating: 4.5,
-    reviews: 24,
-    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-8-essence-stay-8h-matte-liquid-lipstick-08-i-dare-yo.jpg",
-    category: "Lipstick"
+    reviews: 41,
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/miss-claire-948458.jpg",
+    category: "Lip Liner"
   }
 ];
 
@@ -451,7 +451,7 @@ function ProductCatalog({ hostContext, app }: ProductCatalogProps) {
         borderBottom: "1px solid BLADE.colors.border.subtle"
       }}>
         <h1 style={{ margin: 0, fontSize: "20px", fontWeight: "600" }}>
-          {paymentSuccess ? "Payment Confirmed" : showPayment ? "Pay using saved card" : showCheckout ? "Checkout" : "Premium Matte Lipsticks"}
+          {paymentSuccess ? "Payment Confirmed" : showPayment ? "Pay using saved card" : showCheckout ? "Checkout" : "Red Lip Collection"}
         </h1>
         <p style={{ margin: "4px 0 0 0", fontSize: "13px", color: "#666" }}>
           {paymentSuccess 
@@ -462,7 +462,7 @@ function ProductCatalog({ hostContext, app }: ProductCatalogProps) {
                 ? "Select your saved card to complete payment" 
                 : showCheckout 
                   ? `Review your ${getTotalItems()} items` 
-                  : "8H long-lasting, soft-matte texture, no gloss"}
+                  : "Lipsticks, Lip Liners & Lip Balms from Tira"}
         </p>
       </header>
 

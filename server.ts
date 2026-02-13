@@ -13,7 +13,7 @@ const DIST_DIR = import.meta.filename.endsWith(".ts")
  */
 export function createServer(): McpServer {
   const server = new McpServer({
-    name: "Premium Matte Lipstick Collection - The Beauty Store",
+    name: "Red Lip Collection - Tira Beauty Store",
     version: "1.0.0",
   });
 
@@ -33,7 +33,7 @@ export function createServer(): McpServer {
     },
     async (): Promise<CallToolResult> => {
       const totalProducts = 8;
-      return { content: [{ type: "text", text: `Showing ${totalProducts} premium red matte lipsticks - long-lasting, soft-matte texture, no gloss.` }] };
+      return { content: [{ type: "text", text: `Showing ${totalProducts} red lip products - lipsticks, lip liners & lip balms from Tira.` }] };
     },
   );
 
