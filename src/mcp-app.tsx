@@ -151,14 +151,15 @@ function ProductStore() {
   if (error) return <div style={{ padding: "20px", color: "red" }}><strong>ERROR:</strong> {error.message}</div>;
   if (!app) return <div style={{ padding: "20px" }}>Loading store...</div>;
 
-  return <ProductCatalog hostContext={hostContext} />;
+  return <ProductCatalog hostContext={hostContext} app={app} />;
 }
 
 interface ProductCatalogProps {
   hostContext?: McpUiHostContext;
+  app: App | null;
 }
 
-function ProductCatalog({ hostContext }: ProductCatalogProps) {
+function ProductCatalog({ hostContext, app }: ProductCatalogProps) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showCheckout, setShowCheckout] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
@@ -324,8 +325,13 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
         // Store auth URL and auto-open in new tab
         setAuthUrl(redirectAction.url);
         
-        // Open authentication URL in new tab
-        window.open(redirectAction.url, '_blank');
+        // Open authentication URL in new tab using MCP API
+        if (app) {
+          app.openLink({ url: redirectAction.url }).catch((err) => {
+            console.error('Failed to open link:', err);
+            showNotification('Failed to open authentication page', 'error');
+          });
+        }
         
         showNotification('Complete authentication in the new tab', 'success');
         
@@ -594,8 +600,12 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               }}
               onClick={() => {
                 // Reset everything and redirect to products page
-                const redirectUrl = "https://mcp-ui-test-duog.onrender.com/"; // You can change this URL
-                window.open(redirectUrl, '_blank');
+                const redirectUrl = "https://mcp-ui-test-duog.onrender.com/";
+                if (app) {
+                  app.openLink({ url: redirectUrl }).catch((err) => {
+                    console.error('Failed to open link:', err);
+                  });
+                }
                 
                 // Reset state after a short delay
                 setTimeout(() => {
