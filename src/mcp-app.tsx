@@ -23,7 +23,7 @@ const PRODUCTS = [
     size: "3.8g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-production.up.railway.app/public/images/lipstick-1-essence-just-perfect.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-1-essence-just-perfect.jpg",
     category: "Lipstick"
   },
   {
@@ -36,7 +36,7 @@ const PRODUCTS = [
     size: "3.8g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-production.up.railway.app/public/images/lipstick-2-essence-naive.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-2-essence-naive.jpg",
     category: "Lipstick"
   },
   {
@@ -49,7 +49,7 @@ const PRODUCTS = [
     size: "7.6g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-production.up.railway.app/public/images/lipstick-3-lakme-passion-pink.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-3-lakme-passion-pink.jpg",
     category: "Lipstick"
   },
   {
@@ -62,7 +62,7 @@ const PRODUCTS = [
     size: "7.6g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-production.up.railway.app/public/images/lipstick-4-lakme-nut-roast.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-4-lakme-nut-roast.jpg",
     category: "Lipstick"
   },
   {
@@ -75,7 +75,7 @@ const PRODUCTS = [
     size: "7.6g",
     rating: 4.5,
     reviews: 24,
-    image: "https://mcp-ui-test-production.up.railway.app/public/images/lipstick-5-lakme-beachy-vibe.jpg",
+    image: "https://mcp-ui-test-duog.onrender.com/public/images/lipstick-5-lakme-beachy-vibe.jpg",
     category: "Lipstick"
   }
 ];
@@ -227,7 +227,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
     
     const poll = async () => {
       try {
-        const response = await fetch(`https://mcp-ui-test-production.up.railway.app/api/payment-status/${paymentId}`);
+        const response = await fetch(`https://mcp-ui-test-duog.onrender.com/api/payment-status/${paymentId}`);
         
         if (!response.ok) {
           throw new Error('Failed to check payment status');
@@ -302,7 +302,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
       };
 
       // Call our proxy API
-      const response = await fetch('https://mcp-ui-test-production.up.railway.app/api/create-payment', {
+      const response = await fetch('https://mcp-ui-test-duog.onrender.com/api/create-payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -439,7 +439,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               margin: "0 auto 24px"
             }}>
               <img 
-                src="https://mcp-ui-test-production.up.railway.app/public/images/paymentSuccess.svg"
+                src="https://mcp-ui-test-duog.onrender.com/public/images/paymentSuccess.svg"
                 alt="Payment Success"
                 style={{
                   width: "100%",
@@ -481,7 +481,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                 boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)"
               }}>
                 <img 
-                  src="https://mcp-ui-test-production.up.railway.app/public/images/razorapyLogo.svg"
+                  src="https://mcp-ui-test-duog.onrender.com/public/images/razorapyLogo.svg"
                   alt="Razorpay"
                   style={{
                     height: "14px",
@@ -594,7 +594,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               }}
               onClick={() => {
                 // Reset everything and redirect to products page
-                const redirectUrl = "https://mcp-ui-test-production.up.railway.app/"; // You can change this URL
+                const redirectUrl = "https://mcp-ui-test-duog.onrender.com/"; // You can change this URL
                 window.open(redirectUrl, '_blank');
                 
                 // Reset state after a short delay
@@ -877,7 +877,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
                   boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
                 }}>
                   <img 
-                    src="https://mcp-ui-test-production.up.railway.app/public/images/razorapyLogo.svg"
+                    src="https://mcp-ui-test-duog.onrender.com/public/images/razorapyLogo.svg"
                     alt="Razorpay"
                     style={{
                       height: "16px",
@@ -918,7 +918,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
             gap: "8px"
           }}>
             <img 
-              src="https://mcp-ui-test-production.up.railway.app/public/images/tira_logo.png" 
+              src="https://mcp-ui-test-duog.onrender.com/public/images/tira_logo.png" 
               alt="Tira" 
               style={{
                 height: "41px",
@@ -1582,7 +1582,7 @@ function ProductCatalog({ hostContext }: ProductCatalogProps) {
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
             }}>
               <img 
-                src="https://mcp-ui-test-production.up.railway.app/public/images/razorapyLogo.svg"
+                src="https://mcp-ui-test-duog.onrender.com/public/images/razorapyLogo.svg"
                 alt="Razorpay"
                 style={{
                   height: "16px",
