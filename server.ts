@@ -32,7 +32,7 @@ export function createServer(): McpServer {
       _meta: { ui: { resourceUri } }, // Links this tool to its UI resource
     },
     async (): Promise<CallToolResult> => {
-      const totalProducts = 5;
+      const totalProducts = 8;
       return { content: [{ type: "text", text: `Showing ${totalProducts} beauty products from Tira catalog.` }] };
     },
   );
