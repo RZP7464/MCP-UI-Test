@@ -70,8 +70,8 @@ const PRODUCTS = [
     title: "Sugar Cosmetics Matte As Hell Crayon Lipstick - Scarlet O'Hara",
     subtitle: "Bold red with velvety matte finish",
     vendor: "Sugar Cosmetics",
-    price: 799,
-    comparePrice: 799 + 79,
+    price: 1,
+    comparePrice: 799,
     size: "2.8g",
     rating: 4.7,
     reviews: 95,
@@ -83,8 +83,8 @@ const PRODUCTS = [
     title: "Miss Claire Glimmersticks Lipliner - L47 Fiesta Red",
     subtitle: "Vibrant red with long-lasting formula",
     vendor: "Miss Claire",
-    price: 299,
-    comparePrice: 299 + 29,
+    price: 1,
+    comparePrice: 299,
     size: "1.8g",
     rating: 4.5,
     reviews: 34,
@@ -1138,7 +1138,7 @@ function ProductCatalog({ hostContext, app }: ProductCatalogProps) {
                         fontSize: "11px",
                         color: "#16A34A",
                         fontWeight: "600"
-                      }}>90%off</span>
+                      }}>10%off</span>
                     </div>
 
                     {/* Add to Cart Button or Quantity Selector */}
